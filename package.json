@@ -1,0 +1,32 @@
+{
+  "name": "odin-todo",
+  "version": "1.0.0",
+  "description": "The Odin Project's Full Stack JavaScript Course Project: Todo List",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aarnif/odin-todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aarnif/odin-todo/issues"
+  },
+  "homepage": "https://github.com/aarnif/odin-todo#readme",
+  "devDependencies": {
+    "css-loader": "^6.10.0",
+    "postcss": "^8.4.35",
+    "postcss-loader": "^8.1.1",
+    "postcss-preset-env": "^9.5.0",
+    "style-loader": "^3.3.4",
+    "tailwindcss": "^3.4.1",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.2"
+  }
+}
