@@ -1,8 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
-
 export class Project {
-  constructor(title) {
-    this.id = uuidv4();
+  constructor(id, title) {
+    this.id = id;
     this._title = title;
     this.todos = [];
   }

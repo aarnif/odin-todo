@@ -1,9 +1,8 @@
-import { v4 as uuidv4 } from "uuid";
 import { formatISO, formatDistance } from "date-fns";
 
 export class Todo {
-  constructor(title, description, dueDate, priority = "Low") {
-    this.id = uuidv4();
+  constructor(id, title, description, dueDate, priority = "Low") {
+    this.id = id;
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -17,9 +16,9 @@ export class Todo {
     return formatDistance(formatISO(new Date()), this.dueDate);
   }
 
-  addCheckListItem(description) {
+  addCheckListItem(id, description) {
     const checkListItem = {
-      id: uuidv4(),
+      id: id,
       description: description,
       completed: false,
     };
