@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The Odin Project's Full Stack JavaScript Course Project: Todo List",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
@@ -28,5 +29,9 @@
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.2"
+  },
+  "dependencies": {
+    "date-fns": "^3.3.1",
+    "uuid": "^9.0.1"
   }
 }
