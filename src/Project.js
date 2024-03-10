@@ -8,9 +8,6 @@ export class Project {
   }
 
   set title(newTitle) {
-    if (!newTitle.length) {
-      return;
-    }
     this._title = newTitle;
   }
 
@@ -22,8 +19,8 @@ export class Project {
     return this.todos;
   }
 
-  getTodo(title) {
-    return this.todos.find((todo) => title === todo.title);
+  getTodo(id) {
+    return this.todos.find((todo) => todo.id === id);
   }
 
   addNewTodo(newTodo) {
@@ -31,6 +28,12 @@ export class Project {
       return;
     }
     this.todos.push(newTodo);
+  }
+
+  updateTodo(id, updatedTodo) {
+    this.todos = this.todos.map((todo) =>
+      todo.id === id ? updatedTodo : todo
+    );
   }
 
   removeTodo(title) {

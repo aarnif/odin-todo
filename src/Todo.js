@@ -31,7 +31,7 @@ export class Todo {
   }
 
   changeCheckListItem(id, newDescription) {
-    this.checkList.map((item) =>
+    this.checkList = this.checkList.map((item) =>
       item.id === id ? { ...item, description: newDescription } : item
     );
   }
