@@ -26,7 +26,7 @@ const projectMenuItemTodos = (title, todos) => {
   return projectMenuItemTodosList;
 };
 
-const projectsMenuItem = (project) => {
+export const projectsMenuItem = (project) => {
   const projectTitleContainer = document.createElement("li");
 
   const projectMenuItemTitleElement = projectMenuItemTitle(
@@ -42,17 +42,6 @@ const projectsMenuItem = (project) => {
   projectTitleContainer.appendChild(projectMenuItemTodosElement);
 
   return projectTitleContainer;
-};
-
-const newProjectButton = () => {
-  const newProjectButtonContainer = document.createElement("li");
-  const newProjectButton = document.createElement("button");
-  newProjectButton.setAttribute("id", "new-project-button");
-  newProjectButton.textContent = "New Project";
-
-  newProjectButtonContainer.appendChild(newProjectButton);
-
-  return newProjectButtonContainer;
 };
 
 const ProjectsMenu = (projects) => {
@@ -71,9 +60,6 @@ const ProjectsMenu = (projects) => {
     const projectMenuItemElement = projectsMenuItem(project);
     projectsList.appendChild(projectMenuItemElement);
   });
-
-  const newProjectButtonElement = newProjectButton();
-  projectsList.appendChild(newProjectButtonElement);
 
   return projectsList;
 };

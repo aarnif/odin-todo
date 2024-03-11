@@ -18,8 +18,22 @@
             <li><button id="month">This month</button></li>
           </ul>
         </nav>
+        <ul>
+          <li><button id="new-project-button">New Project</button></li>
+        </ul>
       </div>
       <div id="content"></div>
     </div>
+    <dialog id="new-project-modal" data-modal>
+      <label for="new-name">Project name:</label>
+      <input
+        type="text"
+        id="new-project"
+        name="new-project"
+        value=""
+        placeholder="Project name"
+      />
+      <button id="submit-project-button">Add project</button>
+    </dialog>
   </body>
 </html>

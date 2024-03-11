@@ -18,4 +18,10 @@
   #content {
     @apply flex-grow-[5];
   }
+  dialog[open] {
+    @apply w-[200px] h-[100px] flex flex-col items-center border border-black;
+  }
+  dialog::backdrop {
+    @apply bg-black bg-opacity-70;
+  }
 }
