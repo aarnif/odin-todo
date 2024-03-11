@@ -1,6 +1,6 @@
 import "./styles.css";
 import { projects } from "./data.js";
-import { getProjectTitles, getProjectByTitle } from "./utils/projectService.js";
+import { getProjectByTitle } from "./utils/projectService.js";
 import { getAllTodos, getTodosDueBy } from "./utils/todoService.js";
 import ProjectsMenu from "./components/ProjectsMenu.js";
 import Todos from "./components/Todos.js";
@@ -45,9 +45,17 @@ const displayProjectTodos = (project) => {
   content.appendChild(allTodosByProject);
 };
 
-const displayProjectTitles = () => {
+const displayTodo = (id) => {
+  const projectTitle = document.getElementById(id).dataset.project;
+  const projectByTitle = getProjectByTitle(projects, projectTitle);
+  const todoById = Todos(projectTitle, [projectByTitle.getTodo(id)]);
+  emptyContent();
+  content.appendChild(todoById);
+};
+
+const displayProjects = () => {
   const menu = document.getElementById("menu");
-  const projectsListItems = ProjectsMenu(getProjectTitles(projects));
+  const projectsListItems = ProjectsMenu(projects);
   menu.appendChild(projectsListItems);
 };
 
@@ -72,16 +80,24 @@ thisMonthButton.addEventListener("click", (e) => {
 });
 
 const loadContent = () => {
-  displayProjectTitles();
+  displayProjects();
 };
 
 loadContent();
 
-const projectButtons = document.querySelectorAll("#project-button");
+const projectButtons = document.querySelectorAll(".project-button");
+const todoButtons = document.querySelectorAll(".todo-button");
 
 projectButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     console.log("Project button clicked:", e.target.textContent);
     displayProjectTodos(e.target.textContent);
+  });
+});
+
+todoButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    console.log("Todo button clicked:", e.target.textContent);
+    displayTodo(e.target.id);
   });
 });
