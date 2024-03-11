@@ -11,9 +11,13 @@ const ProjectsMenu = (projectTitles) => {
   projectsList.appendChild(projectsListHeaderContainer);
 
   projectTitles.forEach((title) => {
-    const project = document.createElement("li");
-    project.textContent = title;
-    projectsList.appendChild(project);
+    const projectTitleContainer = document.createElement("li");
+    const projectTitleButton = document.createElement("button");
+    projectTitleButton.setAttribute("id", "project-button");
+    projectTitleButton.textContent = title;
+
+    projectTitleContainer.appendChild(projectTitleButton);
+    projectsList.appendChild(projectTitleContainer);
   });
 
   return projectsList;

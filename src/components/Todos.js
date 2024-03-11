@@ -54,8 +54,12 @@ const Todo = (todo) => {
   return todoContainer;
 };
 
-const Todos = (todos) => {
+const Todos = (title, todos) => {
   const todosList = document.createElement("ul");
+  const todosListHeader = document.createElement("h2");
+  todosListHeader.textContent = title;
+
+  todosList.appendChild(todosListHeader);
   todos.forEach((todo) => {
     const todoItemElement = Todo(todo);
     todosList.appendChild(todoItemElement);
