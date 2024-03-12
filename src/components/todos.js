@@ -27,7 +27,7 @@ const checkList = (checkList) => {
   return todoCheckList;
 };
 
-const Todo = (todo) => {
+const todoItem = (todo) => {
   const { id, title, ...items } = todo;
   const todoContainer = document.createElement("li");
   todoContainer.id = id;
@@ -54,18 +54,18 @@ const Todo = (todo) => {
   return todoContainer;
 };
 
-const Todos = (title, todos) => {
+const todos = (title, todos) => {
   const todosList = document.createElement("ul");
   const todosListHeader = document.createElement("h2");
   todosListHeader.textContent = title;
 
   todosList.appendChild(todosListHeader);
   todos.forEach((todo) => {
-    const todoItemElement = Todo(todo);
+    const todoItemElement = todoItem(todo);
     todosList.appendChild(todoItemElement);
   });
 
   return todosList;
 };
 
-export default Todos;
+export default todos;

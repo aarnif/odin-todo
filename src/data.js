@@ -2,6 +2,7 @@ import { Project } from "./projectsAndTodos/Project.js";
 import { Todo } from "./projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";
 
+const inbox = new Project(uuid(), "Inbox");
 const school = new Project(uuid(), "School");
 const houseChores = new Project(uuid(), "HouseChores");
 const hobbies = new Project(uuid(), "Hobbies");
@@ -81,4 +82,4 @@ houseChores.addNewTodo(groceryShopping);
 hobbies.addNewTodo(readBook);
 hobbies.addNewTodo(gardening);
 
-export const projects = [school, houseChores, hobbies];
+export const projects = [inbox, school, houseChores, hobbies];

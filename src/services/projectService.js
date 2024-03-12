@@ -29,7 +29,7 @@ const renameProject = (projects, oldTitle, newTitle) =>
     return project;
   });
 
-export {
+export default {
   getProjectTitles,
   createNewProject,
   removeProject,

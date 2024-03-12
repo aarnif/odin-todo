@@ -44,7 +44,7 @@ export const projectsMenuItem = (project) => {
   return projectTitleContainer;
 };
 
-const ProjectsMenu = (projects) => {
+const projectsMenu = (projects) => {
   const projectsList = document.createElement("ul");
   projectsList.id = "projects";
 
@@ -57,6 +57,7 @@ const ProjectsMenu = (projects) => {
   projectsList.appendChild(projectsListHeaderContainer);
 
   projects.forEach((project) => {
+    if (project.title === "Inbox") return;
     const projectMenuItemElement = projectsMenuItem(project);
     projectsList.appendChild(projectMenuItemElement);
   });
@@ -64,4 +65,4 @@ const ProjectsMenu = (projects) => {
   return projectsList;
 };
 
-export default ProjectsMenu;
+export default projectsMenu;

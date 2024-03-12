@@ -15,13 +15,19 @@
   #menu {
     @apply flex-grow-[1];
   }
+  #content-and-footer {
+    @apply flex-grow-[5] flex flex-col;
+  }
   #content {
-    @apply flex-grow-[5];
+    @apply flex-grow;
   }
   dialog[open] {
-    @apply w-[200px] h-[100px] flex flex-col items-center border border-black;
+    @apply flex flex-col items-center border border-black;
   }
   dialog::backdrop {
     @apply bg-black bg-opacity-70;
+  }
+  form {
+    @apply flex flex-col items-start;
   }
 }

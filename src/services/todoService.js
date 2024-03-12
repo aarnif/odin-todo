@@ -26,4 +26,4 @@ const getTodosDueBy = (projects, dueDate) => {
   return sortTodos(todosDueBy, "dueDate");
 };
 
-export { getAllTodos, getTodosDueBy };
+export default { getAllTodos, getTodosDueBy };
