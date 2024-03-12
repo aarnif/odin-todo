@@ -9,11 +9,11 @@ const formRow = (label, input) => {
 
   formRowLabelItem.appendChild(formLabel);
 
-  if (label !== "priority") {
+  if (label !== "priority" && label !== "description") {
     const formInput = document.createElement("input");
     Object.assign(formInput, input);
     formRowInputItem.appendChild(formInput);
-  } else {
+  } else if (label === "priority") {
     const formSelect = document.createElement("select");
     formSelect.id = input.id;
     formSelect.name = input.id;
@@ -25,6 +25,13 @@ const formRow = (label, input) => {
       formSelect.appendChild(formOption);
     });
     formRowInputItem.appendChild(formSelect);
+  } else if (label === "description") {
+    const formTextArea = document.createElement("textarea");
+    formTextArea.id = input.id;
+    formTextArea.name = input.name;
+    formTextArea.value = input.value;
+    formTextArea.placeholder = input.placeholder;
+    formRowInputItem.appendChild(formTextArea);
   }
 
   formRowItems.appendChild(formRowLabelItem);

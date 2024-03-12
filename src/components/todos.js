@@ -57,6 +57,7 @@ const todoItem = (todo) => {
 const todos = (title, todos) => {
   const todosList = document.createElement("ul");
   const todosListHeader = document.createElement("h2");
+  todosListHeader.id = "project-title";
   todosListHeader.textContent = title;
 
   todosList.appendChild(todosListHeader);

@@ -10,10 +10,18 @@ const titleAttributes = {
   required: true,
 };
 
+const descriptionAttributes = {
+  type: "text",
+  id: "description",
+  name: "description",
+  value: "",
+  placeholder: "Description",
+};
+
 const dueDateAttributes = {
   type: "date",
-  id: "due-date",
-  name: "due-date",
+  id: "dueDate",
+  name: "dueDate",
   value: "",
   placeholder: "Due date",
   required: true,
@@ -45,6 +53,7 @@ const NewTodoForm = () => {
 
   const allInputAttributes = [
     titleAttributes,
+    descriptionAttributes,
     dueDateAttributes,
     priorityAttributes,
   ];

@@ -2,13 +2,6 @@ import { projects } from "./data.js";
 import displayService from "./services/displayService.js";
 import { endOfWeek, endOfMonth } from "date-fns";
 
-const loadContent = () => {
-  displayService.displayProjectMenu(projects);
-  displayService.displayProjectTodos(projects, "Inbox");
-  displayService.addNewProjectModal();
-  displayService.addNewTodoModal();
-};
-
 const addEventListeners = () => {
   const newProjectModal = document.getElementById("new-project-modal");
   const newTodoModal = document.getElementById("new-todo-modal");
@@ -86,7 +79,7 @@ const addEventListeners = () => {
 
   newTodoButton.addEventListener("click", () => {
     console.log("New todo button clicked");
-    displayService.openNewTodoModal();
+    displayService.openNewTodoModal(projects);
   });
 
   cancelNewTodoButton.addEventListener("click", () => {
@@ -96,7 +89,7 @@ const addEventListeners = () => {
 };
 
 const loadPage = () => {
-  loadContent();
+  displayService.loadContent(projects);
   addEventListeners();
 };
 

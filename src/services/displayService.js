@@ -5,10 +5,22 @@ import todos from "../components/todos.js";
 import newProjectModal from "../components/newProjectModal.js";
 import newTodoModal from "../components/newTodoModal.js";
 import { projectsMenuItem } from "../components/projectsMenu.js";
+import footer from "../components/footer.js";
+import { Todo } from "../projectsAndTodos/Todo.js";
+import { v4 as uuid } from "uuid";
 
 const emptyContent = () => {
   console.log("Emptying content");
   content.innerHTML = "";
+};
+
+const displayNewTodoButton = (display) => {
+  const newTodoButton = document.getElementById("new-todo-button");
+  if (display) {
+    newTodoButton.style.display = "block";
+    return;
+  }
+  newTodoButton.style.display = "none";
 };
 
 const displayTodosDueDate = (projects, todosPageTitle, dueDate) => {
@@ -19,6 +31,8 @@ const displayTodosDueDate = (projects, todosPageTitle, dueDate) => {
     todoService.getTodosDueBy(projects, dueDate)
   );
   content.appendChild(allTodosDueDate);
+
+  displayNewTodoButton(false);
 };
 
 const displayProjectTodos = (projects, projectTitle) => {
@@ -27,6 +41,8 @@ const displayProjectTodos = (projects, projectTitle) => {
   emptyContent();
   const allProjectTodosElement = todos(projectTitle, findProject.getAllTodos());
   content.appendChild(allProjectTodosElement);
+
+  displayNewTodoButton(true);
 };
 
 const displayTodo = (projects, id) => {
@@ -39,22 +55,14 @@ const displayTodo = (projects, id) => {
   console.log("Displaying todo by title:", projectByTitle.getTodo(id).title);
   emptyContent();
   content.appendChild(todoById);
+
+  displayNewTodoButton(false);
 };
 
 const displayProjectMenu = (projects) => {
   const menu = document.getElementById("menu");
   const projectsListItems = projectsMenu(projects);
   menu.appendChild(projectsListItems);
-};
-
-const addNewProjectModal = () => {
-  const newProjectModalElement = newProjectModal();
-  document.body.appendChild(newProjectModalElement);
-};
-
-const addNewTodoModal = () => {
-  const newTodoModalElement = newTodoModal();
-  document.body.appendChild(newTodoModalElement);
 };
 
 const addProjectToProjectMenu = (projects, project) => {
@@ -71,6 +79,16 @@ const addProjectToProjectMenu = (projects, project) => {
   });
 
   projectsList.appendChild(projectMenuItemElement);
+};
+
+const addNewProjectModal = () => {
+  const newProjectModalElement = newProjectModal();
+  document.body.appendChild(newProjectModalElement);
+};
+
+const addNewTodoModal = () => {
+  const newTodoModalElement = newTodoModal();
+  document.body.appendChild(newTodoModalElement);
 };
 
 const handleAddNewProject = (e, projects) => {
@@ -98,19 +116,56 @@ const openNewProjectModal = (projects) => {
   newProjectModal.showModal();
 };
 
-const handleAddNewTodo = () => {
+const handleAddNewTodo = (e, projects) => {
   const newTodoModal = document.getElementById("new-todo-modal");
+  const projectTitle = document.getElementById("project-title").textContent;
+  const findProject = projectService.getProjectByTitle(projects, projectTitle);
+
+  const newTodo = new Todo(
+    uuid(),
+    e.target.elements.title.value,
+    e.target.elements.description.value,
+    e.target.elements.dueDate.value,
+    e.target.elements.priority.value
+  );
+
+  console.log("New todo title:", newTodo.title);
+
+  findProject.addNewTodo(newTodo);
+  updateContent(projects, projectTitle);
   newTodoModal.close();
 };
 
-const openNewTodoModal = () => {
+const openNewTodoModal = (projects) => {
   const newTodoModal = document.getElementById("new-todo-modal");
   const newTodoForm = document.getElementById("new-todo-form");
   newTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    handleAddNewTodo();
+    handleAddNewTodo(e, projects);
   });
   newTodoModal.showModal();
+};
+
+const addFooter = () => {
+  const contentAndFooter = document.getElementById("content-and-footer");
+  const footerElement = footer();
+  contentAndFooter.appendChild(footerElement);
+};
+
+const loadContent = (projects) => {
+  addFooter();
+  displayProjectMenu(projects);
+  displayProjectTodos(projects, "Inbox");
+  addNewProjectModal();
+  addNewTodoModal();
+};
+
+const updateContent = (projects, projectTitle) => {
+  const projectsMenu = document.getElementById("projects");
+  projectsMenu.remove();
+  emptyContent();
+  displayProjectMenu(projects);
+  displayProjectTodos(projects, projectTitle);
 };
 
 export default {
@@ -124,4 +179,6 @@ export default {
   addProjectToProjectMenu,
   openNewProjectModal,
   openNewTodoModal,
+  addFooter,
+  loadContent,
 };
