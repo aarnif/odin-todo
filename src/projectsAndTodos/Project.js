@@ -34,7 +34,7 @@ export class Project {
     );
   }
 
-  removeTodo(title) {
-    this.todos = this.todos.filter((todo) => todo.title != title);
+  removeTodo(id) {
+    this.todos = this.todos.filter((todo) => todo.id != id);
   }
 }

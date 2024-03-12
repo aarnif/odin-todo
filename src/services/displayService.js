@@ -5,6 +5,7 @@ import todos from "../components/todos.js";
 import newProjectModal from "../components/newProjectModal.js";
 import newTodoModal from "../components/newTodoModal.js";
 import updateTodoModal from "../components/updateTodoModal.js";
+import deleteTodoModal from "../components/deleteTodoModal.js";
 import { projectsMenuItem } from "../components/projectsMenu.js";
 import footer from "../components/footer.js";
 import { Todo } from "../projectsAndTodos/Todo.js";
@@ -35,6 +36,15 @@ const displayUpdateTodoButton = (display) => {
   updateTodoButton.style.display = "none";
 };
 
+const displayDeleteTodoButton = (display) => {
+  const deleteTodoButton = document.getElementById("delete-todo-button");
+  if (display) {
+    deleteTodoButton.style.display = "block";
+    return;
+  }
+  deleteTodoButton.style.display = "none";
+};
+
 const displayTodosDueDate = (projects, todosPageTitle, dueDate) => {
   console.log("Displaying all todos due:", dueDate);
   emptyContent();
@@ -46,6 +56,7 @@ const displayTodosDueDate = (projects, todosPageTitle, dueDate) => {
 
   displayNewTodoButton(false);
   displayUpdateTodoButton(false);
+  displayDeleteTodoButton(false);
 };
 
 const displayProjectTodos = (projects, projectTitle) => {
@@ -57,6 +68,7 @@ const displayProjectTodos = (projects, projectTitle) => {
 
   displayNewTodoButton(true);
   displayUpdateTodoButton(false);
+  displayDeleteTodoButton(false);
 };
 
 const displayTodo = (projects, id) => {
@@ -72,6 +84,7 @@ const displayTodo = (projects, id) => {
 
   displayNewTodoButton(false);
   displayUpdateTodoButton(true);
+  displayDeleteTodoButton(true);
 };
 
 const displayProjectMenu = (projects) => {
@@ -109,6 +122,11 @@ const addNewTodoModal = () => {
 const addUpdateTodoModal = (todo) => {
   const updateTodoModalElement = updateTodoModal(todo);
   document.body.appendChild(updateTodoModalElement);
+};
+
+const addDeleteTodoModal = (todo) => {
+  const deleteTodoModalElement = deleteTodoModal(todo);
+  document.body.appendChild(deleteTodoModalElement);
 };
 
 const handleAddNewProject = (e, projects) => {
@@ -195,11 +213,55 @@ const openUpdateTodoModal = (projects) => {
 
   const updateTodoModal = document.getElementById("update-todo-modal");
   const updateTodoForm = document.getElementById("update-todo-form");
+
+  const cancelUpdateTodoButton = document.getElementById(
+    "cancel-update-todo-button"
+  );
+
+  cancelUpdateTodoButton.addEventListener("click", () => {
+    console.log("Cancel update todo button clicked");
+    updateTodoModal.close();
+  });
+
   updateTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
     handleUpdateTodo(e, projects, findProject, todoId);
   });
   updateTodoModal.showModal();
+};
+
+const handleDeleteTodo = (e, projects, project, todoId) => {
+  const deleteTodoModal = document.getElementById("delete-todo-modal");
+  project.removeTodo(todoId);
+  updateContent(projects, project.title);
+  deleteTodoModal.close();
+};
+
+const openDeleteTodoModal = (projects) => {
+  const projectTitle = document.getElementById("project-title").textContent;
+  const findProject = projectService.getProjectByTitle(projects, projectTitle);
+  const todoId = document.getElementById("todo-item").dataset.id;
+  const findTodo = findProject.getTodo(todoId);
+
+  addDeleteTodoModal(findTodo);
+
+  const deleteTodoModal = document.getElementById("delete-todo-modal");
+  const deleteTodoForm = document.getElementById("delete-todo-form");
+
+  const cancelDeleteTodoButton = document.getElementById(
+    "cancel-delete-todo-button"
+  );
+
+  cancelDeleteTodoButton.addEventListener("click", () => {
+    console.log("Cancel delete todo button clicked");
+    deleteTodoModal.close();
+  });
+
+  deleteTodoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handleDeleteTodo(e, projects, findProject, todoId);
+  });
+  deleteTodoModal.showModal();
 };
 
 const addFooter = () => {
@@ -246,9 +308,7 @@ const addEventListeners = (projects) => {
   const cancelNewTodoButton = document.getElementById("cancel-new-todo-button");
 
   const updateTodoButton = document.getElementById("update-todo-button");
-  const cancelUpdateTodoButton = document.getElementById(
-    "cancel-update-todo-button"
-  );
+  const deleteTodoButton = document.getElementById("delete-todo-button");
 
   inboxButton.addEventListener("click", (e) => {
     console.log("Inbox button clicked");
@@ -307,6 +367,11 @@ const addEventListeners = (projects) => {
   updateTodoButton.addEventListener("click", () => {
     console.log("Update todo button clicked");
     openUpdateTodoModal(projects);
+  });
+
+  deleteTodoButton.addEventListener("click", () => {
+    console.log("Delete todo button clicked");
+    openDeleteTodoModal(projects);
   });
 };
 

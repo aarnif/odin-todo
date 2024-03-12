@@ -21,8 +21,16 @@ const footer = () => {
 
   footerItemTwo.appendChild(updateTodoButton);
 
+  const footerItemThree = document.createElement("li");
+  const deleteTodoButton = document.createElement("button");
+  deleteTodoButton.id = "delete-todo-button";
+  deleteTodoButton.textContent = "Delete Todo";
+
+  footerItemThree.appendChild(deleteTodoButton);
+
   footerItems.appendChild(footerItemOne);
   footerItems.appendChild(footerItemTwo);
+  footerItems.appendChild(footerItemThree);
   footerContent.appendChild(footerItems);
   footer.appendChild(footerContent);
 

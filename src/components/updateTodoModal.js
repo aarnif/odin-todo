@@ -34,13 +34,13 @@ const priorityAttributes = {
 };
 
 const cancelButtonAttributes = {
-  id: "cancel-new-todo-button",
+  id: "cancel-update-todo-button",
   type: "button",
   textContent: "Cancel",
 };
 
 const submitButtonAttributes = {
-  id: "submit-new-todo-button",
+  id: "submit-update-todo-button",
   type: "submit",
   textContent: "Update Todo",
 };
