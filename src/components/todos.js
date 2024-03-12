@@ -30,9 +30,11 @@ const checkList = (checkList) => {
 const todoItem = (todo) => {
   const { id, title, ...items } = todo;
   const todoContainer = document.createElement("li");
-  todoContainer.id = id;
+  todoContainer.id = "todo-item";
+  todoContainer.dataset.id = id;
 
   const todoHeader = document.createElement("h3");
+  todoHeader.id = "todo-title";
   todoHeader.textContent = title;
 
   todoContainer.appendChild(todoHeader);

@@ -4,10 +4,13 @@ import projectsMenu from "../components/projectsMenu.js";
 import todos from "../components/todos.js";
 import newProjectModal from "../components/newProjectModal.js";
 import newTodoModal from "../components/newTodoModal.js";
+import updateTodoModal from "../components/updateTodoModal.js";
 import { projectsMenuItem } from "../components/projectsMenu.js";
 import footer from "../components/footer.js";
 import { Todo } from "../projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";
+
+const content = document.getElementById("content");
 
 const emptyContent = () => {
   console.log("Emptying content");
@@ -23,6 +26,15 @@ const displayNewTodoButton = (display) => {
   newTodoButton.style.display = "none";
 };
 
+const displayUpdateTodoButton = (display) => {
+  const updateTodoButton = document.getElementById("update-todo-button");
+  if (display) {
+    updateTodoButton.style.display = "block";
+    return;
+  }
+  updateTodoButton.style.display = "none";
+};
+
 const displayTodosDueDate = (projects, todosPageTitle, dueDate) => {
   console.log("Displaying all todos due:", dueDate);
   emptyContent();
@@ -33,6 +45,7 @@ const displayTodosDueDate = (projects, todosPageTitle, dueDate) => {
   content.appendChild(allTodosDueDate);
 
   displayNewTodoButton(false);
+  displayUpdateTodoButton(false);
 };
 
 const displayProjectTodos = (projects, projectTitle) => {
@@ -43,6 +56,7 @@ const displayProjectTodos = (projects, projectTitle) => {
   content.appendChild(allProjectTodosElement);
 
   displayNewTodoButton(true);
+  displayUpdateTodoButton(false);
 };
 
 const displayTodo = (projects, id) => {
@@ -57,6 +71,7 @@ const displayTodo = (projects, id) => {
   content.appendChild(todoById);
 
   displayNewTodoButton(false);
+  displayUpdateTodoButton(true);
 };
 
 const displayProjectMenu = (projects) => {
@@ -89,6 +104,11 @@ const addNewProjectModal = () => {
 const addNewTodoModal = () => {
   const newTodoModalElement = newTodoModal();
   document.body.appendChild(newTodoModalElement);
+};
+
+const addUpdateTodoModal = (todo) => {
+  const updateTodoModalElement = updateTodoModal(todo);
+  document.body.appendChild(updateTodoModalElement);
 };
 
 const handleAddNewProject = (e, projects) => {
@@ -146,6 +166,42 @@ const openNewTodoModal = (projects) => {
   newTodoModal.showModal();
 };
 
+const handleUpdateTodo = (e, projects, project, todoId) => {
+  const updateTodoModal = document.getElementById("update-todo-modal");
+
+  const updatedTodo = new Todo(
+    todoId,
+    e.target.elements.title.value,
+    e.target.elements.description.value,
+    e.target.elements.dueDate.value,
+    e.target.elements.priority.value
+  );
+
+  project.updateTodo(todoId, updatedTodo);
+
+  updateContent(projects, project.title);
+  displayTodo(projects, todoId);
+
+  updateTodoModal.close();
+};
+
+const openUpdateTodoModal = (projects) => {
+  const projectTitle = document.getElementById("project-title").textContent;
+  const findProject = projectService.getProjectByTitle(projects, projectTitle);
+  const todoId = document.getElementById("todo-item").dataset.id;
+  const findTodo = findProject.getTodo(todoId);
+
+  addUpdateTodoModal(findTodo);
+
+  const updateTodoModal = document.getElementById("update-todo-modal");
+  const updateTodoForm = document.getElementById("update-todo-form");
+  updateTodoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handleUpdateTodo(e, projects, findProject, todoId);
+  });
+  updateTodoModal.showModal();
+};
+
 const addFooter = () => {
   const contentAndFooter = document.getElementById("content-and-footer");
   const footerElement = footer();
@@ -158,6 +214,7 @@ const loadContent = (projects) => {
   displayProjectTodos(projects, "Inbox");
   addNewProjectModal();
   addNewTodoModal();
+  addEventListeners(projects);
 };
 
 const updateContent = (projects, projectTitle) => {
@@ -166,6 +223,91 @@ const updateContent = (projects, projectTitle) => {
   emptyContent();
   displayProjectMenu(projects);
   displayProjectTodos(projects, projectTitle);
+  addEventListeners(projects);
+};
+
+const addEventListeners = (projects) => {
+  const newProjectModal = document.getElementById("new-project-modal");
+  const newTodoModal = document.getElementById("new-todo-modal");
+
+  const inboxButton = document.getElementById("inbox");
+  const todayButton = document.getElementById("today");
+  const thisWeekButton = document.getElementById("week");
+  const thisMonthButton = document.getElementById("month");
+  const projectButtons = document.querySelectorAll(".project-button");
+  const todoButtons = document.querySelectorAll(".todo-button");
+
+  const newProjectButton = document.getElementById("new-project-button");
+  const cancelNewProjectButton = document.getElementById(
+    "cancel-project-button"
+  );
+
+  const newTodoButton = document.getElementById("new-todo-button");
+  const cancelNewTodoButton = document.getElementById("cancel-new-todo-button");
+
+  const updateTodoButton = document.getElementById("update-todo-button");
+  const cancelUpdateTodoButton = document.getElementById(
+    "cancel-update-todo-button"
+  );
+
+  inboxButton.addEventListener("click", (e) => {
+    console.log("Inbox button clicked");
+    displayProjectTodos(projects, e.target.textContent);
+  });
+
+  todayButton.addEventListener("click", (e) => {
+    console.log("Today button clicked");
+    displayTodosDueDate(projects, e.target.textContent, new Date());
+  });
+
+  thisWeekButton.addEventListener("click", (e) => {
+    console.log("This week button clicked");
+    displayTodosDueDate(projects, e.target.textContent, endOfWeek(new Date()));
+  });
+
+  thisMonthButton.addEventListener("click", (e) => {
+    console.log("This month button clicked");
+    displayTodosDueDate(projects, e.target.textContent, endOfMonth(new Date()));
+  });
+
+  projectButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      console.log("Project button clicked:", e.target.textContent);
+      displayProjectTodos(projects, e.target.textContent);
+    });
+  });
+
+  todoButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      console.log("Todo button clicked:", e.target.textContent);
+      displayTodo(projects, e.target.id);
+    });
+  });
+
+  newProjectButton.addEventListener("click", () => {
+    console.log("New project button clicked");
+    openNewProjectModal(projects);
+  });
+
+  cancelNewProjectButton.addEventListener("click", () => {
+    console.log("Cancel new project button clicked");
+    newProjectModal.close();
+  });
+
+  newTodoButton.addEventListener("click", () => {
+    console.log("New todo button clicked");
+    openNewTodoModal(projects);
+  });
+
+  cancelNewTodoButton.addEventListener("click", () => {
+    console.log("Cancel new todo button clicked");
+    newTodoModal.close();
+  });
+
+  updateTodoButton.addEventListener("click", () => {
+    console.log("Update todo button clicked");
+    openUpdateTodoModal(projects);
+  });
 };
 
 export default {
@@ -176,9 +318,12 @@ export default {
   displayProjectMenu,
   addNewProjectModal,
   addNewTodoModal,
+  addUpdateTodoModal,
   addProjectToProjectMenu,
   openNewProjectModal,
   openNewTodoModal,
+  openUpdateTodoModal,
   addFooter,
   loadContent,
+  addEventListeners,
 };

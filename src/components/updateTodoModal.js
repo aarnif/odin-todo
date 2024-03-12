@@ -42,14 +42,19 @@ const cancelButtonAttributes = {
 const submitButtonAttributes = {
   id: "submit-new-todo-button",
   type: "submit",
-  textContent: "Add Todo",
+  textContent: "Update Todo",
 };
 
-const NewTodoForm = () => {
+const UpdateTodoForm = (todo) => {
   const dialog = document.createElement("dialog");
   const form = document.createElement("form");
 
-  form.id = "new-todo-form";
+  form.id = "update-todo-form";
+
+  titleAttributes.value = todo.title;
+  descriptionAttributes.value = todo.description;
+  dueDateAttributes.value = todo.dueDate;
+  priorityAttributes.defaultValue = todo.priority;
 
   const allInputAttributes = [
     titleAttributes,
@@ -75,10 +80,10 @@ const NewTodoForm = () => {
   return form;
 };
 
-const newTodoModal = () => {
+const updateTodoModal = (todo) => {
   const dialog = document.createElement("dialog");
-  dialog.id = "new-todo-modal";
-  const form = NewTodoForm();
+  dialog.id = "update-todo-modal";
+  const form = UpdateTodoForm(todo);
 
   dialog.appendChild(form);
 
@@ -86,4 +91,4 @@ const newTodoModal = () => {
   return dialog;
 };
 
-export default newTodoModal;
+export default updateTodoModal;
