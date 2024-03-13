@@ -1,11 +1,12 @@
-import formRow from "./formRow.js";
-import formButtons from "./formButtons.js";
+import formRow from "./formComponents/formRow.js";
+import checkListItems from "./checkListItems.js";
+import formButtons from "./formComponents/formButtons.js";
 
 const titleAttributes = {
   type: "text",
   id: "title",
   name: "title",
-  value: "",
+  value: "Test",
   placeholder: "Title",
   required: true,
 };
@@ -14,7 +15,7 @@ const descriptionAttributes = {
   type: "text",
   id: "description",
   name: "description",
-  value: "",
+  value: "Test Todo description",
   placeholder: "Description",
 };
 
@@ -22,7 +23,7 @@ const dueDateAttributes = {
   type: "date",
   id: "dueDate",
   name: "dueDate",
-  value: "",
+  value: "2024-04-01",
   placeholder: "Due date",
   required: true,
 };
@@ -30,7 +31,16 @@ const dueDateAttributes = {
 const priorityAttributes = {
   id: "priority",
   values: ["Low", "Medium", "High"],
+  value: "Low",
   required: true,
+};
+
+const checkListItemsAttributes = {
+  type: "text",
+  id: "new-checkListItem",
+  name: "new-checkListItem",
+  value: "Checklist item 1",
+  placeholder: "Add checklist item",
 };
 
 const cancelButtonAttributes = {
@@ -62,6 +72,13 @@ const NewTodoForm = () => {
     const formRowElement = formRow(input.id, input);
     form.appendChild(formRowElement);
   });
+
+  const checkListItemsElement = checkListItems(
+    checkListItemsAttributes.id,
+    checkListItemsAttributes
+  );
+
+  form.appendChild(checkListItemsElement);
 
   const formButtonElements = formButtons(
     cancelButtonAttributes,

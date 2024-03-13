@@ -1,5 +1,6 @@
-import formRow from "./formRow.js";
-import formButtons from "./formButtons.js";
+import formRow from "./formComponents/formRow.js";
+import checkListItems from "./checkListItems.js";
+import formButtons from "./formComponents/formButtons.js";
 
 const titleAttributes = {
   type: "text",
@@ -31,6 +32,14 @@ const priorityAttributes = {
   id: "priority",
   values: ["Low", "Medium", "High"],
   required: true,
+};
+
+const checkListItemsAttributes = {
+  type: "text",
+  id: "update-checkListItem",
+  name: "update-checkListItem",
+  value: "",
+  placeholder: "Add checklist item",
 };
 
 const cancelButtonAttributes = {
@@ -67,6 +76,13 @@ const UpdateTodoForm = (todo) => {
     const formRowElement = formRow(input.id, input);
     form.appendChild(formRowElement);
   });
+
+  const checkListItemsElement = checkListItems(
+    checkListItemsAttributes.id,
+    checkListItemsAttributes
+  );
+
+  form.appendChild(checkListItemsElement);
 
   const formButtonElements = formButtons(
     cancelButtonAttributes,

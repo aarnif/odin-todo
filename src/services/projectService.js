@@ -21,6 +21,9 @@ const removeProject = (projects, projectTitle) => {
 const getProjectByTitle = (projects, projectTitle) =>
   projects.find((project) => project.title === projectTitle);
 
+const getProjectById = (projects, id) =>
+  projects.find((project) => project.id === id);
+
 const renameProject = (projects, oldTitle, newTitle) =>
   projects.map((project) => {
     if (project.title === oldTitle) {
@@ -34,5 +37,6 @@ export default {
   createNewProject,
   removeProject,
   getProjectByTitle,
+  getProjectById,
   renameProject,
 };

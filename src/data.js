@@ -82,4 +82,4 @@ houseChores.addNewTodo(groceryShopping);
 hobbies.addNewTodo(readBook);
 hobbies.addNewTodo(gardening);
 
-export const projects = [inbox, school, houseChores, hobbies];
+export default [inbox, school, houseChores, hobbies];

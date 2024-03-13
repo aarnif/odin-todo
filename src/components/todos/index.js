@@ -1,3 +1,5 @@
+import funcs from "./funcs.js";
+
 const item = (key, value) => {
   const todoItem = document.createElement("li");
   todoItem.textContent = `${key}: ${value}`;
@@ -27,7 +29,7 @@ const checkList = (checkList) => {
   return todoCheckList;
 };
 
-const todoItem = (todo) => {
+const todoItem = (projects, todo) => {
   const { id, title, ...items } = todo;
   const todoContainer = document.createElement("li");
   todoContainer.id = "todo-item";
@@ -38,6 +40,30 @@ const todoItem = (todo) => {
   todoHeader.textContent = title;
 
   todoContainer.appendChild(todoHeader);
+
+  const updateTodoButton = document.createElement("button");
+  updateTodoButton.id = id;
+  updateTodoButton.className = "update-todo-button pl-1";
+  updateTodoButton.textContent = "U";
+
+  updateTodoButton.addEventListener("click", () => {
+    console.log("Update todo button clicked");
+    funcs.openUpdateTodoModal(projects, id);
+  });
+
+  todoContainer.appendChild(updateTodoButton);
+
+  const deleteTodoButton = document.createElement("button");
+  deleteTodoButton.id = id;
+  deleteTodoButton.className = "update-todo-button pl-1";
+  deleteTodoButton.textContent = "D";
+
+  deleteTodoButton.addEventListener("click", () => {
+    console.log("Delete todo button clicked");
+    funcs.openDeleteTodoModal(projects, id);
+  });
+
+  todoContainer.appendChild(deleteTodoButton);
 
   const todoItemsList = document.createElement("ul");
 
@@ -56,7 +82,7 @@ const todoItem = (todo) => {
   return todoContainer;
 };
 
-const todos = (title, todos) => {
+const todos = (projects, title, todos) => {
   const todosList = document.createElement("ul");
   const todosListHeader = document.createElement("h2");
   todosListHeader.id = "project-title";
@@ -64,7 +90,7 @@ const todos = (title, todos) => {
 
   todosList.appendChild(todosListHeader);
   todos.forEach((todo) => {
-    const todoItemElement = todoItem(todo);
+    const todoItemElement = todoItem(projects, todo);
     todosList.appendChild(todoItemElement);
   });
 
