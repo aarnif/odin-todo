@@ -3,6 +3,7 @@ import projectService from "./projectService.js";
 import projectsMenu from "../components/projectsMenu.js";
 import todos from "../components/todos.js";
 import newProjectModal from "../components/newProjectModal.js";
+import updateProjectModal from "../components/updateProjectModal.js";
 import newTodoModal from "../components/newTodoModal.js";
 import updateTodoModal from "../components/updateTodoModal.js";
 import deleteTodoModal from "../components/deleteTodoModal.js";
@@ -114,6 +115,11 @@ const addNewProjectModal = () => {
   document.body.appendChild(newProjectModalElement);
 };
 
+const addUpdateProjectModal = (project) => {
+  const updateProjectModalElement = updateProjectModal(project);
+  document.body.appendChild(updateProjectModalElement);
+};
+
 const addNewTodoModal = () => {
   const newTodoModalElement = newTodoModal();
   document.body.appendChild(newTodoModalElement);
@@ -152,6 +158,44 @@ const openNewProjectModal = (projects) => {
     handleAddNewProject(e, projects);
   });
   newProjectModal.showModal();
+};
+
+const handleUpdateProject = (e, projects) => {
+  const updateProjectModal = document.getElementById("update-project-modal");
+  const oldProjectTitle = document.getElementById("project-title").textContent;
+  const newProjectTitle = e.target.elements.title.value;
+  console.log("Update project title:", newProjectTitle);
+  projectService.renameProject(projects, oldProjectTitle, newProjectTitle);
+  updateContent(projects, newProjectTitle);
+  updateProjectModal.close();
+};
+
+const openUpdateProjectModal = (projects) => {
+  const projectTitle = document.getElementById("project-title").textContent;
+
+  if (projectTitle === "Inbox") {
+    console.log("Cannot update Inbox project");
+    return;
+  }
+
+  const findProject = projectService.getProjectByTitle(projects, projectTitle);
+  addUpdateProjectModal(findProject);
+  const updateProjectModal = document.getElementById("update-project-modal");
+  const updateProjectForm = document.getElementById("update-project-form");
+  updateProjectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handleUpdateProject(e, projects);
+  });
+
+  const cancelUpdateProjectButton = document.getElementById(
+    "cancel-update-project-button"
+  );
+
+  cancelUpdateProjectButton.addEventListener("click", () => {
+    console.log("Cancel update project button clicked");
+    updateProjectModal.close();
+  });
+  updateProjectModal.showModal();
 };
 
 const handleAddNewTodo = (e, projects) => {
@@ -301,8 +345,10 @@ const addEventListeners = (projects) => {
 
   const newProjectButton = document.getElementById("new-project-button");
   const cancelNewProjectButton = document.getElementById(
-    "cancel-project-button"
+    "cancel-new-project-button"
   );
+
+  const updateProjectButton = document.getElementById("update-project-button");
 
   const newTodoButton = document.getElementById("new-todo-button");
   const cancelNewTodoButton = document.getElementById("cancel-new-todo-button");
@@ -352,6 +398,11 @@ const addEventListeners = (projects) => {
   cancelNewProjectButton.addEventListener("click", () => {
     console.log("Cancel new project button clicked");
     newProjectModal.close();
+  });
+
+  updateProjectButton.addEventListener("click", () => {
+    console.log("Update project button clicked");
+    openUpdateProjectModal(projects);
   });
 
   newTodoButton.addEventListener("click", () => {

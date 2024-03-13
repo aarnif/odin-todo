@@ -11,23 +11,25 @@ const titleAttributes = {
 };
 
 const cancelButtonAttributes = {
-  id: "cancel-new-project-button",
+  id: "cancel-update-project-button",
   type: "button",
   formMethod: "dialog",
   textContent: "Cancel",
 };
 
 const submitButtonAttributes = {
-  id: "submit-new-project-button",
+  id: "submit-update-project-button",
   type: "submit",
-  textContent: "Add Project",
+  textContent: "Update Project",
 };
 
-const newProjectForm = () => {
+const updateProjectForm = (project) => {
   const dialog = document.createElement("dialog");
   const form = document.createElement("form");
 
-  form.id = "new-project-form";
+  form.id = "update-project-form";
+
+  titleAttributes.value = project.title;
 
   const allInputAttributes = [titleAttributes];
 
@@ -48,15 +50,15 @@ const newProjectForm = () => {
   return form;
 };
 
-const newProjectModal = () => {
+const updateProjectModal = (project) => {
   const dialog = document.createElement("dialog");
-  dialog.id = "new-project-modal";
+  dialog.id = "update-project-modal";
 
-  const form = newProjectForm();
+  const form = updateProjectForm(project);
 
   dialog.appendChild(form);
 
   return dialog;
 };
 
-export default newProjectModal;
+export default updateProjectModal;
