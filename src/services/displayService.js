@@ -4,6 +4,7 @@ import projectsMenu from "../components/projectsMenu.js";
 import todos from "../components/todos.js";
 import newProjectModal from "../components/newProjectModal.js";
 import updateProjectModal from "../components/updateProjectModal.js";
+import deleteProjectModal from "../components/deleteProjectModal.js";
 import newTodoModal from "../components/newTodoModal.js";
 import updateTodoModal from "../components/updateTodoModal.js";
 import deleteTodoModal from "../components/deleteTodoModal.js";
@@ -11,6 +12,7 @@ import { projectsMenuItem } from "../components/projectsMenu.js";
 import footer from "../components/footer.js";
 import { Todo } from "../projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";
+import { endOfWeek, endOfMonth } from "date-fns";
 
 const content = document.getElementById("content");
 
@@ -120,6 +122,11 @@ const addUpdateProjectModal = (project) => {
   document.body.appendChild(updateProjectModalElement);
 };
 
+const addDeleteProjectModal = (project) => {
+  const deleteProjectModalElement = deleteProjectModal(project);
+  document.body.appendChild(deleteProjectModalElement);
+};
+
 const addNewTodoModal = () => {
   const newTodoModalElement = newTodoModal();
   document.body.appendChild(newTodoModalElement);
@@ -146,6 +153,7 @@ const handleAddNewProject = (e, projects) => {
     newProjectTitle
   );
   addProjectToProjectMenu(projects, findNewProject);
+  updateContent(projects, newProjectTitle);
 
   newProjectModal.close();
 };
@@ -196,6 +204,54 @@ const openUpdateProjectModal = (projects) => {
     updateProjectModal.close();
   });
   updateProjectModal.showModal();
+};
+
+const handleDeleteProject = (projects, projectTitle) => {
+  const deleteProjectModal = document.getElementById("delete-project-modal");
+  console.log(projects);
+  projects = projectService.removeProject(projects, projectTitle);
+  console.log(projects);
+  updateContent(projects, "Inbox");
+  deleteProjectModal.close();
+};
+
+const openDeleteProjectModal = (projects) => {
+  const projectTitle = document.getElementById("project-title").textContent;
+  console.log("Try to delete project title:", projectTitle);
+
+  if (["Inbox", "Today", "This week", "This month"].includes(projectTitle)) {
+    console.log(`Cannot delete section: ${projectTitle}!`);
+    return;
+  }
+
+  const findProject = projectService.getProjectByTitle(projects, projectTitle);
+
+  if (findProject.getAllTodos().length > 0) {
+    console.log("Cannot delete project with todos");
+    return;
+  }
+
+  addDeleteProjectModal(findProject);
+
+  const deleteProjectModal = document.getElementById("delete-project-modal");
+  const deleteProjectForm = document.getElementById("delete-project-form");
+  deleteProjectModal.showModal();
+
+  const cancelDeleteProjectButton = document.getElementById(
+    "cancel-delete-project-button"
+  );
+
+  cancelDeleteProjectButton.addEventListener("click", () => {
+    console.log("Cancel delete project button clicked");
+    deleteProjectModal.close();
+  });
+
+  deleteProjectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    handleDeleteProject(projects, projectTitle);
+  });
+
+  deleteProjectModal.showModal();
 };
 
 const handleAddNewTodo = (e, projects) => {
@@ -327,6 +383,7 @@ const updateContent = (projects, projectTitle) => {
   const projectsMenu = document.getElementById("projects");
   projectsMenu.remove();
   emptyContent();
+  console.log(projects);
   displayProjectMenu(projects);
   displayProjectTodos(projects, projectTitle);
   addEventListeners(projects);
@@ -349,6 +406,7 @@ const addEventListeners = (projects) => {
   );
 
   const updateProjectButton = document.getElementById("update-project-button");
+  const deleteProjectButton = document.getElementById("delete-project-button");
 
   const newTodoButton = document.getElementById("new-todo-button");
   const cancelNewTodoButton = document.getElementById("cancel-new-todo-button");
@@ -403,6 +461,11 @@ const addEventListeners = (projects) => {
   updateProjectButton.addEventListener("click", () => {
     console.log("Update project button clicked");
     openUpdateProjectModal(projects);
+  });
+
+  deleteProjectButton.addEventListener("click", () => {
+    console.log("Delete project button clicked");
+    openDeleteProjectModal(projects);
   });
 
   newTodoButton.addEventListener("click", () => {
