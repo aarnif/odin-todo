@@ -16,10 +16,18 @@ const handleUpdateTodo = (e, projects, project, todoId) => {
     e.target.elements.priority.value
   );
 
-  const checkListItems = document.querySelectorAll("#update-checkListItem");
+  const checkListItems = document.querySelectorAll("#check-list-item-form");
 
   checkListItems.forEach((item) => {
-    updatedTodo.addCheckListItem(uuid(), item.value);
+    const checkListItemName = item.querySelector(
+      "#update-check-list-item"
+    ).value;
+    const checkListItemChecked = item.querySelector("#completed").checked;
+    updatedTodo.addCheckListItem(
+      uuid(),
+      checkListItemName,
+      checkListItemChecked
+    );
   });
 
   project.updateTodo(todoId, updatedTodo);

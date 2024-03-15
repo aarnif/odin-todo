@@ -1,6 +1,7 @@
 import formRow from "./formComponents/formRow.js";
 import checkListItems from "./checkListItems.js";
 import formButtons from "./formComponents/formButtons.js";
+import { addNewCheckListItem } from "./checkListItems.js";
 
 const titleAttributes = {
   type: "text",
@@ -37,10 +38,11 @@ const priorityAttributes = {
 
 const checkListItemsAttributes = {
   type: "text",
-  id: "new-checkListItem",
-  name: "new-checkListItem",
-  value: "Checklist item 1",
+  id: "new-check-list-item",
+  name: "new-check-list-item",
+  value: "",
   placeholder: "Add checklist item",
+  label: `Checklist item`,
 };
 
 const cancelButtonAttributes = {
@@ -73,12 +75,22 @@ const NewTodoForm = () => {
     form.appendChild(formRowElement);
   });
 
-  const checkListItemsElement = checkListItems(
-    checkListItemsAttributes.id,
-    checkListItemsAttributes
-  );
+  const checkListItemsElement = checkListItems(checkListItemsAttributes);
+
+  addNewCheckListItem(checkListItemsElement, checkListItemsAttributes);
 
   form.appendChild(checkListItemsElement);
+
+  const newCheckListButton = document.createElement("button");
+  newCheckListButton.id = "new-check-list-button";
+  newCheckListButton.textContent = "New CheckList Item";
+
+  newCheckListButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    addNewCheckListItem(checkListItemsElement, checkListItemsAttributes);
+  });
+
+  form.appendChild(newCheckListButton);
 
   const formButtonElements = formButtons(
     cancelButtonAttributes,

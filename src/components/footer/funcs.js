@@ -17,12 +17,12 @@ const handleAddNewTodo = (e, projects) => {
     e.target.elements.priority.value
   );
 
-  const checkListItems = document.querySelectorAll("#new-checkListItem");
-
-  console.log(checkListItems);
+  const checkListItems = document.querySelectorAll("#check-list-item-form");
 
   checkListItems.forEach((item) => {
-    newTodo.addCheckListItem(uuid(), item.value);
+    const checkListItemName = item.querySelector("#new-check-list-item").value;
+    const checkListItemChecked = item.querySelector("#completed").checked;
+    newTodo.addCheckListItem(uuid(), checkListItemName, checkListItemChecked);
   });
 
   console.log("New todo title:", newTodo.title);
