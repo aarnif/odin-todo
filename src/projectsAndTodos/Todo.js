@@ -36,9 +36,15 @@ export class Todo {
     this.checkList = this.checkList.filter((item) => item.id !== id);
   }
 
-  changeCheckListItem(id, newDescription) {
+  updateCheckListItem(id, updatedCheckListItemContents) {
     this.checkList = this.checkList.map((item) =>
-      item.id === id ? { ...item, description: newDescription } : item
+      item.id === id
+        ? {
+            ...item,
+            description: updatedCheckListItemContents.description,
+            completed: updatedCheckListItemContents.completed,
+          }
+        : item
     );
   }
 }

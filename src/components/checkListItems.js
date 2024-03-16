@@ -1,6 +1,4 @@
 const checkListItem = (attributes) => {
-  const checkListItemForm = document.createElement("form");
-  checkListItemForm.id = "check-list-item-form";
   const checkListItem = document.createElement("ul");
   checkListItem.id = "check-list-item";
 
@@ -8,10 +6,8 @@ const checkListItem = (attributes) => {
   const formRowInputItem = document.createElement("li");
   const completedItem = document.createElement("li");
   completedItem.textContent = "Completed: ";
-  const removeButtonItem = document.createElement("li");
   const formLabel = document.createElement("label");
   const formInput = document.createElement("input");
-  const removeButton = document.createElement("button");
 
   formLabel.for = "check-list-item";
   formLabel.textContent = attributes.label;
@@ -28,26 +24,15 @@ const checkListItem = (attributes) => {
 
   completedItem.appendChild(completedCheckbox);
 
-  removeButton.textContent = "Remove";
-
-  removeButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    checkListItem.remove();
-  });
-
   formRowLabelItem.appendChild(formLabel);
   formRowInputItem.appendChild(formInput);
   formRowInputItem.appendChild(completedItem);
-  removeButtonItem.appendChild(removeButton);
 
   checkListItem.appendChild(formRowLabelItem);
   checkListItem.appendChild(formRowInputItem);
   checkListItem.appendChild(completedItem);
-  checkListItem.appendChild(removeButtonItem);
 
-  checkListItemForm.appendChild(checkListItem);
-
-  return checkListItemForm;
+  return checkListItem;
 };
 
 export const addNewCheckListItem = (checkListItems, attributes) => {

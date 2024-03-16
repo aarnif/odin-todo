@@ -1,7 +1,5 @@
 import formRow from "./formComponents/formRow.js";
-import checkListItems from "./checkListItems.js";
 import formButtons from "./formComponents/formButtons.js";
-import { addNewCheckListItem } from "./checkListItems.js";
 
 const titleAttributes = {
   type: "text",
@@ -33,16 +31,6 @@ const priorityAttributes = {
   id: "priority",
   values: ["Low", "Medium", "High"],
   required: true,
-};
-
-const checkListItemsAttributes = {
-  type: "text",
-  id: "update-check-list-item",
-  name: "update-check-list-item",
-  value: "",
-  placeholder: "Add checklist item",
-  label: `Checklist item`,
-  completed: false,
 };
 
 const cancelButtonAttributes = {
@@ -79,34 +67,6 @@ const UpdateTodoForm = (todo) => {
     const formRowElement = formRow(input.id, input);
     form.appendChild(formRowElement);
   });
-
-  const checkListItemsElement = checkListItems();
-
-  form.appendChild(checkListItemsElement);
-
-  todo.checkList.forEach((item) => {
-    const itemAttributes = {
-      type: "text",
-      id: "update-check-list-item",
-      name: "update-check-list-item",
-      value: item.description,
-      placeholder: "Add checklist item",
-      label: `Checklist item`,
-      completed: item.completed,
-    };
-    addNewCheckListItem(checkListItemsElement, itemAttributes);
-  });
-
-  const newCheckListButton = document.createElement("button");
-  newCheckListButton.id = "new-check-list-button";
-  newCheckListButton.textContent = "New CheckList Item";
-
-  newCheckListButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    addNewCheckListItem(checkListItemsElement, checkListItemsAttributes);
-  });
-
-  form.appendChild(newCheckListButton);
 
   const formButtonElements = formButtons(
     cancelButtonAttributes,
