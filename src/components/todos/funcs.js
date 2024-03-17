@@ -124,7 +124,7 @@ const handleUpdateCheckListItem = (e, projects, todoId, checkListItem, id) => {
 
   const updatedCheckListItemContents = {
     description: e.target.elements["new-check-list-item"].value,
-    completed: e.target.elements["completed"].checked,
+    completed: checkListItem.completed,
   };
 
   getTodo.updateCheckListItem(id, updatedCheckListItemContents);
@@ -236,7 +236,7 @@ const handleNewCheckListItem = (e, projects, todoId) => {
   const newCheckListItemContents = {
     id: uuid(),
     description: e.target.elements["new-check-list-item"].value,
-    completed: e.target.elements["completed"].checked,
+    completed: false,
   };
 
   getTodo.addCheckListItem(
@@ -279,10 +279,30 @@ const openNewCheckListItemModal = (projects, todoId) => {
   newCheckListItemModal.showModal();
 };
 
+const markCheckListItemCompleted = (projects, todoId, checkList, id) => {
+  const projectTitle = document.getElementById("project-title").textContent;
+  const getProject = projectService.getProjectByTitle(projects, projectTitle);
+  const getTodo = getProject.getTodo(todoId);
+  getTodo.markCheckListItemCompleted(id);
+  displayTodo(projects, todoId);
+};
+
+const markTodoCompleted = (projects, id) => {
+  const projectTitle = document.getElementById("project-title").textContent;
+  const getProject = projectService.getProjectByTitle(projects, projectTitle);
+  const getTodo = getProject.getTodo(id);
+
+  getTodo.toggleCompleted();
+  updateProjectsMenu(projects);
+  displayTodo(projects, id);
+};
+
 export default {
   openUpdateTodoModal,
   openDeleteTodoModal,
   openUpdateCheckListItemModal,
   openDeleteCheckListItemModal,
   openNewCheckListItemModal,
+  markCheckListItemCompleted,
+  markTodoCompleted,
 };

@@ -4,8 +4,6 @@ const checkListItem = (attributes) => {
 
   const formRowLabelItem = document.createElement("li");
   const formRowInputItem = document.createElement("li");
-  const completedItem = document.createElement("li");
-  completedItem.textContent = "Completed: ";
   const formLabel = document.createElement("label");
   const formInput = document.createElement("input");
 
@@ -14,23 +12,11 @@ const checkListItem = (attributes) => {
 
   Object.assign(formInput, attributes);
 
-  const completedCheckbox = document.createElement("input");
-  completedCheckbox.type = "checkbox";
-  completedCheckbox.id = "completed";
-  completedCheckbox.name = "completed";
-  completedCheckbox.value = true;
-  completedCheckbox.label = "Completed";
-  completedCheckbox.checked = attributes.completed;
-
-  completedItem.appendChild(completedCheckbox);
-
   formRowLabelItem.appendChild(formLabel);
   formRowInputItem.appendChild(formInput);
-  formRowInputItem.appendChild(completedItem);
 
   checkListItem.appendChild(formRowLabelItem);
   checkListItem.appendChild(formRowInputItem);
-  checkListItem.appendChild(completedItem);
 
   return checkListItem;
 };

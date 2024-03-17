@@ -19,6 +19,10 @@ export class Todo {
     this.checkList = [];
   }
 
+  toggleCompleted() {
+    this.completed = !this.completed;
+  }
+
   calculateTimeLeft() {
     return formatDistance(formatISO(new Date()), this.dueDate);
   }
@@ -30,6 +34,12 @@ export class Todo {
       completed: completed,
     };
     this.checkList.push(checkListItem);
+  }
+
+  markCheckListItemCompleted(id) {
+    this.checkList = this.checkList.map((item) =>
+      item.id === id ? { ...item, completed: !item.completed } : item
+    );
   }
 
   removeCheckListItem(id) {

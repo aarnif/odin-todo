@@ -40,7 +40,7 @@ const checkListItemsAttributes = {
   type: "text",
   id: "new-check-list-item",
   name: "new-check-list-item",
-  value: "dfdfdfdf",
+  value: "",
   placeholder: "Add checklist item",
   label: `Checklist item`,
 };

@@ -16,11 +16,27 @@ const checkListItem = (projects, todoId, checkList) => {
     checkListItemList.appendChild(checkListItem);
   }
 
+  const markCompletedButtonContainer = document.createElement("li");
+  const checkListMarkCompletedButton = document.createElement("button");
+
+  checkListMarkCompletedButton.id = id;
+  checkListMarkCompletedButton.className = "mark-completed-button";
+  checkListMarkCompletedButton.textContent = "Mark Completed";
+
+  checkListMarkCompletedButton.addEventListener("click", () => {
+    console.log("Mark checklist item completed button clicked");
+    funcs.markCheckListItemCompleted(projects, todoId, checkList, id);
+  });
+
+  markCompletedButtonContainer.appendChild(checkListMarkCompletedButton);
+
+  checkListItemList.appendChild(markCompletedButtonContainer);
+
   const checkListButtonsContainer = document.createElement("li");
 
   const updateCheckListItemButton = document.createElement("button");
   updateCheckListItemButton.id = id;
-  updateCheckListItemButton.className = "update-check-list-item-button pl-1";
+  updateCheckListItemButton.className = "update-check-list-item-button pr-1";
   updateCheckListItemButton.textContent = "U";
 
   updateCheckListItemButton.addEventListener("click", () => {
@@ -32,7 +48,7 @@ const checkListItem = (projects, todoId, checkList) => {
 
   const deleteCheckListItemButton = document.createElement("button");
   deleteCheckListItemButton.id = id;
-  deleteCheckListItemButton.className = "delete-check-list-item-button pl-1";
+  deleteCheckListItemButton.className = "delete-check-list-item-button";
   deleteCheckListItemButton.textContent = "D";
 
   deleteCheckListItemButton.addEventListener("click", () => {
@@ -75,7 +91,7 @@ const todoItem = (projects, projectTitle, todo) => {
 
   const updateTodoButton = document.createElement("button");
   updateTodoButton.id = id;
-  updateTodoButton.className = "update-todo-button pl-1";
+  updateTodoButton.className = "update-todo-button pr-1";
   updateTodoButton.textContent = "U";
 
   updateTodoButton.addEventListener("click", () => {
@@ -87,7 +103,7 @@ const todoItem = (projects, projectTitle, todo) => {
 
   const deleteTodoButton = document.createElement("button");
   deleteTodoButton.id = id;
-  deleteTodoButton.className = "update-todo-button pl-1";
+  deleteTodoButton.className = "update-todo-button";
   deleteTodoButton.textContent = "D";
 
   deleteTodoButton.addEventListener("click", () => {
@@ -105,6 +121,22 @@ const todoItem = (projects, projectTitle, todo) => {
       todoItemsList.appendChild(todoItemListElement);
     }
   }
+
+  const markTodoCompletedButtonContainer = document.createElement("li");
+  const todoMarkCompletedButton = document.createElement("button");
+
+  todoMarkCompletedButton.id = id;
+  todoMarkCompletedButton.className = "mark-completed-button";
+  todoMarkCompletedButton.textContent = "Mark Completed";
+
+  todoMarkCompletedButton.addEventListener("click", () => {
+    console.log("Mark todo completed button clicked");
+    funcs.markTodoCompleted(projects, id);
+  });
+
+  markTodoCompletedButtonContainer.appendChild(todoMarkCompletedButton);
+
+  todoItemsList.appendChild(markTodoCompletedButtonContainer);
 
   const checkListHeader = document.createElement("h4");
   checkListHeader.id = "check-list-title";
