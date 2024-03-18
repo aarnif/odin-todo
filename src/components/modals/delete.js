@@ -1,4 +1,4 @@
-import formButtons from "./formComponents/formButtons.js";
+import formButtons from "../formComponents/formButtons.js";
 
 const cancelButtonAttributes = {
   id: "cancel-delete-button",

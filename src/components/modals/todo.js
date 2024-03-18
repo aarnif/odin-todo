@@ -1,5 +1,5 @@
-import formRow from "./formComponents/formRow.js";
-import formButtons from "./formComponents/formButtons.js";
+import formRow from "../formComponents/formRow.js";
+import formButtons from "../formComponents/formButtons.js";
 
 const titleAttributes = {
   type: "text",

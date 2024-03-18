@@ -1,6 +1,5 @@
-import checkListItems from "./checkListItems.js";
-import formButtons from "./formComponents/formButtons.js";
-import { addNewCheckListItem } from "./checkListItems.js";
+import checkListItems, { addNewCheckListItem } from "../checkListItems.js";
+import formButtons from "../formComponents/formButtons.js";
 
 const checkListItemsAttributes = {
   type: "text",
