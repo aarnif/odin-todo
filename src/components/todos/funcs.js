@@ -1,5 +1,5 @@
-import deleteModal from "../deleteModal.js";
-import todoModal from "../todoModal.js";
+import deleteModal from "../modals/delete.js";
+import todoModal from "../modals/todo.js";
 import projectService from "../../services/projectService.js";
 import { Todo } from "../../projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";
@@ -8,7 +8,8 @@ import {
   displayProjectTodos,
   displayTodo,
 } from "../sideBar/funcs.js";
-import checkListItemModal from "../checkListItemModal.js";
+import checkListItemModal from "../modals/checkListItem.js";
+import addNotificationModal from "../modals/notification.js";
 
 const handleUpdateTodo = (e, projects, project, oldTodo, todoId) => {
   const updateTodoModal = document.getElementById("todo-modal");
@@ -82,6 +83,14 @@ const openDeleteTodoModal = (projects, id) => {
   const projectTitle = document.getElementById("project-title").textContent;
   const getProject = projectService.getProjectByTitle(projects, projectTitle);
   const findTodo = getProject.getTodo(id);
+
+  if (findTodo.getAllCheckListItems().length > 0) {
+    addNotificationModal(
+      "Cannot delete todo with uncompleted check list items!"
+    );
+    console.log("Cannot delete todo with uncompleted check list items!");
+    return;
+  }
 
   addDeleteTodoModal(findTodo);
 
@@ -283,6 +292,14 @@ const markTodoCompleted = (projects, id) => {
   const projectTitle = document.getElementById("project-title").textContent;
   const getProject = projectService.getProjectByTitle(projects, projectTitle);
   const getTodo = getProject.getTodo(id);
+
+  if (!getTodo.completed && getTodo.getAllCheckListItems().length > 0) {
+    addNotificationModal(
+      "Cannot mark complete todo with uncompleted check list items!"
+    );
+    console.log("Cannot mark complete todo with uncompleted check list items!");
+    return;
+  }
 
   getTodo.toggleCompleted();
   updateProjectsMenu(projects);

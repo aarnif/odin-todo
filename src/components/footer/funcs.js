@@ -1,4 +1,4 @@
-import todoModal from "../todoModal.js";
+import todoModal from "../modals/todo.js";
 import projectService from "../../services/projectService.js";
 import { Todo } from "../../projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";

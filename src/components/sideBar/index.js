@@ -1,6 +1,6 @@
 import addProjectsMenu from "./projectsMenu.js";
 import funcs from "./funcs.js";
-import projectModal from "../projectModal.js";
+import projectModal from "../modals/project.js";
 import { endOfWeek, endOfMonth } from "date-fns";
 
 const todosItem = (id, text) => {

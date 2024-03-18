@@ -27,6 +27,10 @@ export class Todo {
     return formatDistance(formatISO(new Date()), this.dueDate);
   }
 
+  getAllCheckListItems() {
+    return this.checkList.filter((item) => item.completed === false);
+  }
+
   addCheckListItem(id, description, completed = false) {
     const checkListItem = {
       id: id,

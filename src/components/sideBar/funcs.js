@@ -2,8 +2,9 @@ import projectService from "../../services/projectService.js";
 import todoService from "../../services/todoService.js";
 import todos from "../todos/index.js";
 import addProjectsMenu from "./projectsMenu.js";
-import deleteModal from "../deleteModal.js";
-import projectModal from "../projectModal.js";
+import deleteModal from "../modals/delete.js";
+import projectModal from "../modals/project.js";
+import addNotificationModal from "../modals/notification.js";
 
 const emptyContent = () => {
   const content = document.getElementById("content");
@@ -183,6 +184,7 @@ const openDeleteProjectModal = (projects, id) => {
   }
 
   if (getProject.getAllTodos().length > 0) {
+    addNotificationModal("Cannot delete project with todos");
     console.log("Cannot delete project with todos");
     return;
   }
