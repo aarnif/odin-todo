@@ -2,7 +2,7 @@ import projectService from "../../services/projectService.js";
 import todoService from "../../services/todoService.js";
 import todos from "../todos/index.js";
 import addProjectsMenu from "./projectsMenu.js";
-import deleteProjectModal from "../deleteProjectModal.js";
+import deleteModal from "../deleteModal.js";
 import projectModal from "../projectModal.js";
 
 const emptyContent = () => {
@@ -85,8 +85,20 @@ const handleAddNewProject = (e, projects) => {
 };
 
 const openNewProjectModal = (projects) => {
+  addNewProjectModal();
   const newProjectModal = document.getElementById("project-modal");
   const newProjectForm = document.getElementById("project-form");
+
+  const cancelNewProjectButton = document.getElementById(
+    "cancel-project-button"
+  );
+
+  cancelNewProjectButton.addEventListener("click", () => {
+    console.log("Cancel new project button clicked");
+    newProjectModal.close();
+    document.body.removeChild(newProjectModal);
+  });
+
   newProjectForm.addEventListener("submit", (e) => {
     e.preventDefault();
     handleAddNewProject(e, projects);
@@ -104,6 +116,11 @@ const handleUpdateProject = (e, projects, getProject) => {
   displayProjectTodos(projects, newProjectTitle);
   updateProjectModal.close();
   document.body.removeChild(updateProjectModal);
+};
+
+const addNewProjectModal = () => {
+  const newProjectModalElement = projectModal();
+  document.body.appendChild(newProjectModalElement);
 };
 
 const addUpdateProjectModal = (project) => {
@@ -142,7 +159,7 @@ const openUpdateProjectModal = (projects, id) => {
 const handleDeleteProject = (e, projects, project) => {
   console.log(projects);
   console.log("Remove project:", project.title);
-  const deleteProjectModal = document.getElementById("delete-project-modal");
+  const deleteProjectModal = document.getElementById("delete-modal");
   projects = projectService.removeProject(projects, project.title);
   updateProjectsMenu(projects);
   displayProjectTodos(projects, "Inbox");
@@ -150,7 +167,7 @@ const handleDeleteProject = (e, projects, project) => {
 };
 
 const addDeleteProjectModal = (project) => {
-  const deleteProjectModalElement = deleteProjectModal(project);
+  const deleteProjectModalElement = deleteModal(`Delete ${project.title}?`);
   document.body.appendChild(deleteProjectModalElement);
 };
 
@@ -172,12 +189,12 @@ const openDeleteProjectModal = (projects, id) => {
 
   addDeleteProjectModal(getProject);
 
-  const deleteProjectModal = document.getElementById("delete-project-modal");
-  const deleteProjectForm = document.getElementById("delete-project-form");
+  const deleteProjectModal = document.getElementById("delete-modal");
+  const deleteProjectForm = document.getElementById("delete-form");
   deleteProjectModal.showModal();
 
   const cancelDeleteProjectButton = document.getElementById(
-    "cancel-delete-project-button"
+    "cancel-delete-button"
   );
 
   cancelDeleteProjectButton.addEventListener("click", () => {

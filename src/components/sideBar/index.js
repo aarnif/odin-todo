@@ -52,7 +52,7 @@ const addSideBar = (projects) => {
 
   wrapper.appendChild(sideBarElement);
 
-  addNewProjectModal();
+  // addNewProjectModal();
   addProjectsMenu(projects);
 
   const inboxButton = document.getElementById("inbox");

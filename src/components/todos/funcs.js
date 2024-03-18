@@ -1,4 +1,4 @@
-import deleteTodoModal from "../deleteTodoModal.js";
+import deleteModal from "../deleteModal.js";
 import todoModal from "../todoModal.js";
 import projectService from "../../services/projectService.js";
 import { Todo } from "../../projectsAndTodos/Todo.js";
@@ -8,7 +8,6 @@ import {
   displayProjectTodos,
   displayTodo,
 } from "../sideBar/funcs.js";
-import deleteCheckListItemModal from "../deleteCheckListItemModal.js";
 import checkListItemModal from "../checkListItemModal.js";
 
 const handleUpdateTodo = (e, projects, project, oldTodo, todoId) => {
@@ -66,7 +65,7 @@ const openUpdateTodoModal = (projects, id) => {
 };
 
 const handleDeleteTodo = (e, projects, project, todoId) => {
-  const deleteTodoModal = document.getElementById("delete-todo-modal");
+  const deleteTodoModal = document.getElementById("delete-modal");
   project.removeTodo(todoId);
   updateProjectsMenu(projects);
   displayProjectTodos(projects, project.title);
@@ -75,7 +74,7 @@ const handleDeleteTodo = (e, projects, project, todoId) => {
 };
 
 const addDeleteTodoModal = (todo) => {
-  const deleteTodoModalElement = deleteTodoModal(todo);
+  const deleteTodoModalElement = deleteModal(`Delete ${todo.title}?`);
   document.body.appendChild(deleteTodoModalElement);
 };
 
@@ -86,11 +85,11 @@ const openDeleteTodoModal = (projects, id) => {
 
   addDeleteTodoModal(findTodo);
 
-  const deleteTodoModal = document.getElementById("delete-todo-modal");
-  const deleteTodoForm = document.getElementById("delete-todo-form");
+  const deleteTodoModal = document.getElementById("delete-modal");
+  const deleteTodoForm = document.getElementById("delete-form");
 
   const cancelDeleteTodoButton = document.getElementById(
-    "cancel-delete-todo-button"
+    "cancel-delete-button"
   );
 
   cancelDeleteTodoButton.addEventListener("click", () => {
@@ -165,14 +164,14 @@ const openUpdateCheckListItemModal = (projects, todoId, checkListItem, id) => {
 };
 
 const addDeleteCheckListItemModal = (checkListItem) => {
-  const deleteTodoModalElement = deleteCheckListItemModal(checkListItem);
+  const deleteTodoModalElement = deleteModal(
+    `Delete item: ${checkListItem.description}?`
+  );
   document.body.appendChild(deleteTodoModalElement);
 };
 
 const handleDeleteCheckListItem = (e, projects, todoId, checkListItem, id) => {
-  const deleteCheckListItemModal = document.getElementById(
-    "delete-checklist-item-modal"
-  );
+  const deleteCheckListItemModal = document.getElementById("delete-modal");
   const projectTitle = document.getElementById("project-title").textContent;
 
   const getProject = projectService.getProjectByTitle(projects, projectTitle);
@@ -192,16 +191,12 @@ const openDeleteCheckListItemModal = (projects, todoId, checkListItem, id) => {
   console.log(checkListItem);
   addDeleteCheckListItemModal(checkListItem);
 
-  const deleteCheckListItemModal = document.getElementById(
-    "delete-checklist-item-modal"
-  );
+  const deleteCheckListItemModal = document.getElementById("delete-modal");
 
-  const updateCheckListItemForm = document.getElementById(
-    "delete-checklist-item-form"
-  );
+  const updateCheckListItemForm = document.getElementById("delete-form");
 
   const cancelUpdateCheckListItemButton = document.getElementById(
-    "cancel-delete-checklist-item-button"
+    "cancel-delete-button"
   );
 
   cancelUpdateCheckListItemButton.addEventListener("click", () => {

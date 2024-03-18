@@ -1,25 +1,25 @@
 import formButtons from "./formComponents/formButtons.js";
 
 const cancelButtonAttributes = {
-  id: "cancel-delete-todo-button",
+  id: "cancel-delete-button",
   type: "button",
   textContent: "Cancel",
 };
 
 const submitButtonAttributes = {
-  id: "submit-delete-todo-button",
+  id: "submit-delete-button",
   type: "submit",
-  textContent: "Delete Todo",
+  textContent: "Submit",
 };
 
-const deleteTodoForm = (todo) => {
+const deleteForm = (deleteFormText) => {
   const dialog = document.createElement("dialog");
   const form = document.createElement("form");
 
-  form.id = "delete-todo-form";
+  form.id = "delete-form";
 
   const formHeader = document.createElement("h2");
-  formHeader.textContent = `Delete ${todo.title}?`;
+  formHeader.textContent = deleteFormText;
 
   const formButtonElements = formButtons(
     cancelButtonAttributes,
@@ -34,14 +34,18 @@ const deleteTodoForm = (todo) => {
   return form;
 };
 
-const deleteTodoModal = (todo) => {
+const deleteModal = (deleteModalText) => {
   const dialog = document.createElement("dialog");
-  dialog.id = "delete-todo-modal";
-  const form = deleteTodoForm(todo);
+  dialog.id = "delete-modal";
+
+  // Disable, because will not remove the dialog from the DOM when pressing the escape key in Chrome
+  dialog.addEventListener("cancel", (event) => event.preventDefault());
+
+  const form = deleteForm(deleteModalText);
 
   dialog.appendChild(form);
 
   return dialog;
 };
 
-export default deleteTodoModal;
+export default deleteModal;

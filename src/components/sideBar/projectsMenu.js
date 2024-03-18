@@ -71,11 +71,17 @@ export const projectsMenuItem = (projects, project) => {
   return projectTitleContainer;
 };
 
-const newProjectButtonElement = () => {
+const newProjectButtonElement = (projects) => {
   const newProjectButtonContainer = document.createElement("div");
   const newProjectButton = document.createElement("button");
   newProjectButton.id = "new-project-button";
   newProjectButton.textContent = "New Project";
+
+  newProjectButton.addEventListener("click", () => {
+    console.log("New project button clicked");
+    funcs.openNewProjectModal(projects);
+  });
+
   newProjectButtonContainer.appendChild(newProjectButton);
   return newProjectButtonContainer;
 };
@@ -106,18 +112,11 @@ const addProjectsMenu = (projects) => {
   const projectsListItems = projectsMenu(projects);
   menu.appendChild(projectsListItems);
 
-  const newProjectButtonContainer = newProjectButtonElement();
+  const newProjectButtonContainer = newProjectButtonElement(projects);
   menu.appendChild(newProjectButtonContainer);
 
   const projectButtons = document.querySelectorAll(".project-button");
   const todoButtons = document.querySelectorAll(".todo-button");
-
-  const newProjectButton = document.getElementById("new-project-button");
-  const cancelNewProjectButton = document.getElementById(
-    "cancel-project-button"
-  );
-
-  const newProjectModal = document.getElementById("project-modal");
 
   projectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -131,16 +130,6 @@ const addProjectsMenu = (projects) => {
       console.log("Todo button clicked:", e.target.textContent);
       funcs.displayTodo(projects, e.target.id);
     });
-  });
-
-  newProjectButton.addEventListener("click", () => {
-    console.log("New project button clicked");
-    funcs.openNewProjectModal(projects);
-  });
-
-  cancelNewProjectButton.addEventListener("click", () => {
-    console.log("Cancel new project button clicked");
-    newProjectModal.close();
   });
 };
 
