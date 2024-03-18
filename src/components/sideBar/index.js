@@ -1,6 +1,6 @@
 import addProjectsMenu from "./projectsMenu.js";
 import funcs from "./funcs.js";
-import newProjectModal from "../newProjectModal.js";
+import projectModal from "../projectModal.js";
 import { endOfWeek, endOfMonth } from "date-fns";
 
 const todosItem = (id, text) => {
@@ -12,7 +12,7 @@ const todosItem = (id, text) => {
   return li;
 };
 
-const sideBar = (projects) => {
+const sideBar = () => {
   const sidebar = document.createElement("div");
   sidebar.setAttribute("id", "sidebar");
 
@@ -37,7 +37,7 @@ const sideBar = (projects) => {
 };
 
 const addNewProjectModal = () => {
-  const newProjectModalElement = newProjectModal();
+  const newProjectModalElement = projectModal();
   document.body.appendChild(newProjectModalElement);
 };
 

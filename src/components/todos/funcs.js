@@ -1,5 +1,5 @@
-import updateTodoModal from "../updateTodoModal.js";
 import deleteTodoModal from "../deleteTodoModal.js";
+import todoModal from "../todoModal.js";
 import projectService from "../../services/projectService.js";
 import { Todo } from "../../projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";
@@ -8,12 +8,11 @@ import {
   displayProjectTodos,
   displayTodo,
 } from "../sideBar/funcs.js";
-import updateCheckListItemModal from "../updateCheckListItemModal.js";
 import deleteCheckListItemModal from "../deleteCheckListItemModal.js";
-import newCheckListItemModal from "../newCheckListItemModal.js";
+import checkListItemModal from "../checkListItemModal.js";
 
 const handleUpdateTodo = (e, projects, project, oldTodo, todoId) => {
-  const updateTodoModal = document.getElementById("update-todo-modal");
+  const updateTodoModal = document.getElementById("todo-modal");
 
   const updatedTodo = new Todo(
     todoId,
@@ -37,7 +36,7 @@ const handleUpdateTodo = (e, projects, project, oldTodo, todoId) => {
 };
 
 const addUpdateTodoModal = (todo) => {
-  const updateTodoModalElement = updateTodoModal(todo);
+  const updateTodoModalElement = todoModal(todo);
   document.body.appendChild(updateTodoModalElement);
 };
 
@@ -48,15 +47,14 @@ const openUpdateTodoModal = (projects, id) => {
 
   addUpdateTodoModal(findTodo);
 
-  const updateTodoModal = document.getElementById("update-todo-modal");
-  const updateTodoForm = document.getElementById("update-todo-form");
+  const updateTodoModal = document.getElementById("todo-modal");
+  const updateTodoForm = document.getElementById("todo-form");
 
-  const cancelUpdateTodoButton = document.getElementById(
-    "cancel-update-todo-button"
-  );
+  const cancelUpdateTodoButton = document.getElementById("cancel-todo-button");
 
   cancelUpdateTodoButton.addEventListener("click", () => {
     console.log("Cancel update todo button clicked");
+    document.body.removeChild(updateTodoModal);
     updateTodoModal.close();
   });
 
@@ -108,14 +106,13 @@ const openDeleteTodoModal = (projects, id) => {
 };
 
 const addUpdateCheckListItemModal = (checkListItem) => {
-  const updateCheckListIitemModalElement =
-    updateCheckListItemModal(checkListItem);
+  const updateCheckListIitemModalElement = checkListItemModal(checkListItem);
   document.body.appendChild(updateCheckListIitemModalElement);
 };
 
 const handleUpdateCheckListItem = (e, projects, todoId, checkListItem, id) => {
   const updateCheckListItemModal = document.getElementById(
-    "update-check-list-item-modal"
+    "check-list-item-modal"
   );
   const projectTitle = document.getElementById("project-title").textContent;
 
@@ -123,7 +120,7 @@ const handleUpdateCheckListItem = (e, projects, todoId, checkListItem, id) => {
   const getTodo = getProject.getTodo(todoId);
 
   const updatedCheckListItemContents = {
-    description: e.target.elements["new-check-list-item"].value,
+    description: e.target.elements["check-list-item"].value,
     completed: checkListItem.completed,
   };
 
@@ -142,19 +139,20 @@ const openUpdateCheckListItemModal = (projects, todoId, checkListItem, id) => {
   addUpdateCheckListItemModal(checkListItem);
 
   const updateCheckListItemModal = document.getElementById(
-    "update-check-list-item-modal"
+    "check-list-item-modal"
   );
 
   const updateCheckListItemForm = document.getElementById(
-    "new-check-list-item-form"
+    "check-list-item-form"
   );
 
   const cancelUpdateCheckListItemButton = document.getElementById(
-    "cancel-update-checklist-item-button"
+    "cancel-checklist-item-button"
   );
 
   cancelUpdateCheckListItemButton.addEventListener("click", () => {
     console.log("Cancel update check list item button clicked");
+    document.body.removeChild(updateCheckListItemModal);
     updateCheckListItemModal.close();
   });
 
@@ -219,14 +217,14 @@ const openDeleteCheckListItemModal = (projects, todoId, checkListItem, id) => {
   deleteCheckListItemModal.showModal();
 };
 
-const addNewCheckListItemModal = (checkListItem) => {
-  const deleteTodoModalElement = newCheckListItemModal(checkListItem);
+const addNewCheckListItemModal = () => {
+  const deleteTodoModalElement = checkListItemModal();
   document.body.appendChild(deleteTodoModalElement);
 };
 
 const handleNewCheckListItem = (e, projects, todoId) => {
   const newCheckListItemModal = document.getElementById(
-    "new-check-list-item-modal"
+    "check-list-item-modal"
   );
   const projectTitle = document.getElementById("project-title").textContent;
 
@@ -235,7 +233,7 @@ const handleNewCheckListItem = (e, projects, todoId) => {
 
   const newCheckListItemContents = {
     id: uuid(),
-    description: e.target.elements["new-check-list-item"].value,
+    description: e.target.elements["check-list-item"].value,
     completed: false,
   };
 
@@ -256,18 +254,17 @@ const handleNewCheckListItem = (e, projects, todoId) => {
 const openNewCheckListItemModal = (projects, todoId) => {
   addNewCheckListItemModal();
   const newCheckListItemModal = document.getElementById(
-    "new-check-list-item-modal"
+    "check-list-item-modal"
   );
-  const newCheckListItemForm = document.getElementById(
-    "new-check-list-item-form"
-  );
+  const newCheckListItemForm = document.getElementById("check-list-item-form");
 
   const cancelNewCheckListItemButton = document.getElementById(
-    "cancel-new-checklist-item-button"
+    "cancel-checklist-item-button"
   );
 
   cancelNewCheckListItemButton.addEventListener("click", () => {
     console.log("Cancel new check list item button clicked");
+    document.body.removeChild(newCheckListItemModal);
     newCheckListItemModal.close();
   });
 

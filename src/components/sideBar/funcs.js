@@ -2,8 +2,8 @@ import projectService from "../../services/projectService.js";
 import todoService from "../../services/todoService.js";
 import todos from "../todos/index.js";
 import addProjectsMenu from "./projectsMenu.js";
-import updateProjectModal from "../updateProjectModal.js";
 import deleteProjectModal from "../deleteProjectModal.js";
+import projectModal from "../projectModal.js";
 
 const emptyContent = () => {
   const content = document.getElementById("content");
@@ -72,7 +72,7 @@ export const updateProjectsMenu = (projects) => {
 };
 
 const handleAddNewProject = (e, projects) => {
-  const newProjectModal = document.getElementById("new-project-modal");
+  const newProjectModal = document.getElementById("project-modal");
   const newProjectTitle = e.target.elements.title.value;
   console.log("New project title:", newProjectTitle);
 
@@ -81,11 +81,12 @@ const handleAddNewProject = (e, projects) => {
   displayProjectTodos(projects, newProjectTitle);
 
   newProjectModal.close();
+  document.body.removeChild(newProjectModal);
 };
 
 const openNewProjectModal = (projects) => {
-  const newProjectModal = document.getElementById("new-project-modal");
-  const newProjectForm = document.getElementById("new-project-form");
+  const newProjectModal = document.getElementById("project-modal");
+  const newProjectForm = document.getElementById("project-form");
   newProjectForm.addEventListener("submit", (e) => {
     e.preventDefault();
     handleAddNewProject(e, projects);
@@ -94,7 +95,7 @@ const openNewProjectModal = (projects) => {
 };
 
 const handleUpdateProject = (e, projects, getProject) => {
-  const updateProjectModal = document.getElementById("update-project-modal");
+  const updateProjectModal = document.getElementById("project-modal");
   const oldProjectTitle = getProject.title;
   const newProjectTitle = e.target.elements.title.value;
   console.log("Update project title:", newProjectTitle);
@@ -102,10 +103,11 @@ const handleUpdateProject = (e, projects, getProject) => {
   updateProjectsMenu(projects);
   displayProjectTodos(projects, newProjectTitle);
   updateProjectModal.close();
+  document.body.removeChild(updateProjectModal);
 };
 
 const addUpdateProjectModal = (project) => {
-  const updateProjectModalElement = updateProjectModal(project);
+  const updateProjectModalElement = projectModal(project);
   document.body.appendChild(updateProjectModalElement);
 };
 
@@ -118,20 +120,21 @@ const openUpdateProjectModal = (projects, id) => {
   }
 
   addUpdateProjectModal(getProject);
-  const updateProjectModal = document.getElementById("update-project-modal");
-  const updateProjectForm = document.getElementById("update-project-form");
+  const updateProjectModal = document.getElementById("project-modal");
+  const updateProjectForm = document.getElementById("project-form");
   updateProjectForm.addEventListener("submit", (e) => {
     e.preventDefault();
     handleUpdateProject(e, projects, getProject);
   });
 
   const cancelUpdateProjectButton = document.getElementById(
-    "cancel-update-project-button"
+    "cancel-project-button"
   );
 
   cancelUpdateProjectButton.addEventListener("click", () => {
     console.log("Cancel update project button clicked");
     updateProjectModal.close();
+    document.body.removeChild(updateProjectModal);
   });
   updateProjectModal.showModal();
 };

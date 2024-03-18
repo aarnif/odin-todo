@@ -1,11 +1,11 @@
-import newTodoModal from "../newTodoModal.js";
+import todoModal from "../todoModal.js";
 import projectService from "../../services/projectService.js";
 import { Todo } from "../../projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";
 import { updateProjectsMenu, displayProjectTodos } from "../sideBar/funcs.js";
 
 const handleAddNewTodo = (e, projects) => {
-  const newTodoModal = document.getElementById("new-todo-modal");
+  const newTodoModal = document.getElementById("todo-modal");
   const projectTitle = document.getElementById("project-title").textContent;
   const findProject = projectService.getProjectByTitle(projects, projectTitle);
 
@@ -39,26 +39,29 @@ const handleAddNewTodo = (e, projects) => {
 };
 
 const addNewTodoModal = () => {
-  const newTodoModalElement = newTodoModal();
+  const newTodoModalElement = todoModal();
   document.body.appendChild(newTodoModalElement);
 };
 
 const openNewTodoModal = (projects) => {
   console.log(projects);
   addNewTodoModal();
-  const newTodoModal = document.getElementById("new-todo-modal");
-  const newTodoForm = document.getElementById("new-todo-form");
+  const newTodoModal = document.getElementById("todo-modal");
+  const newTodoForm = document.getElementById("todo-form");
+
+  const cancelNewTodoButton = document.getElementById("cancel-todo-button");
+
+  cancelNewTodoButton.addEventListener("click", () => {
+    console.log("Cancel new todo button clicked");
+    document.body.removeChild(newTodoModal);
+    newTodoModal.close();
+  });
+
   newTodoForm.addEventListener("submit", (e) => {
     e.preventDefault();
     handleAddNewTodo(e, projects);
   });
 
-  const cancelNewTodoButton = document.getElementById("cancel-new-todo-button");
-
-  cancelNewTodoButton.addEventListener("click", () => {
-    console.log("Cancel new todo button clicked");
-    newTodoModal.close();
-  });
   newTodoModal.showModal();
 };
 

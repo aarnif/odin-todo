@@ -4,29 +4,29 @@ import { addNewCheckListItem } from "./checkListItems.js";
 
 const checkListItemsAttributes = {
   type: "text",
-  id: "new-check-list-item",
-  name: "new-check-list-item",
+  id: "check-list-item",
+  name: "check-list-item",
   value: "",
-  placeholder: "Add checklist item",
+  placeholder: "description",
   label: `Checklist item`,
 };
 
 const cancelButtonAttributes = {
-  id: "cancel-new-checklist-item-button",
+  id: "cancel-checklist-item-button",
   type: "button",
   textContent: "Cancel",
 };
 
 const submitButtonAttributes = {
-  id: "submit-new-checklist-item-button",
+  id: "submit-checklist-item-button",
   type: "submit",
-  textContent: "Add Item",
+  textContent: "Submit",
 };
 
-const newCheckListItemForm = () => {
+const checkListItemForm = () => {
   const form = document.createElement("form");
 
-  form.id = "new-check-list-item-form";
+  form.id = "check-list-item-form";
 
   const checkListItemsElement = checkListItems(checkListItemsAttributes);
 
@@ -44,15 +44,22 @@ const newCheckListItemForm = () => {
   return form;
 };
 
-const newCheckListItemModal = () => {
+const checkListItemModal = (checkListItem = null) => {
+  // If updating a check list item
+  if (checkListItem) {
+    checkListItemsAttributes.value = checkListItem.description;
+  }
   const dialog = document.createElement("dialog");
-  dialog.id = "new-check-list-item-modal";
-  const form = newCheckListItemForm();
+
+  // Disable, because will not remove the dialog from the DOM when pressing the escape key in Chrome
+  dialog.addEventListener("cancel", (event) => event.preventDefault());
+
+  dialog.id = "check-list-item-modal";
+  const form = checkListItemForm();
 
   dialog.appendChild(form);
 
-  console.log(dialog);
   return dialog;
 };
 
-export default newCheckListItemModal;
+export default checkListItemModal;

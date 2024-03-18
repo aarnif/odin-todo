@@ -5,7 +5,7 @@ const titleAttributes = {
   type: "text",
   id: "title",
   name: "title",
-  value: "",
+  value: "Test",
   placeholder: "Title",
   required: true,
 };
@@ -14,7 +14,7 @@ const descriptionAttributes = {
   type: "text",
   id: "description",
   name: "description",
-  value: "",
+  value: "Test Todo description",
   placeholder: "Description",
 };
 
@@ -22,7 +22,7 @@ const dueDateAttributes = {
   type: "date",
   id: "dueDate",
   name: "dueDate",
-  value: "",
+  value: "2024-04-01",
   placeholder: "Due date",
   required: true,
 };
@@ -30,31 +30,26 @@ const dueDateAttributes = {
 const priorityAttributes = {
   id: "priority",
   values: ["Low", "Medium", "High"],
+  value: "Low",
   required: true,
 };
 
 const cancelButtonAttributes = {
-  id: "cancel-update-todo-button",
+  id: "cancel-todo-button",
   type: "button",
   textContent: "Cancel",
 };
 
 const submitButtonAttributes = {
-  id: "submit-update-todo-button",
+  id: "submit-todo-button",
   type: "submit",
-  textContent: "Update Todo",
+  textContent: "Submit",
 };
 
-const UpdateTodoForm = (todo) => {
-  const dialog = document.createElement("dialog");
+const todoForm = () => {
   const form = document.createElement("form");
 
-  form.id = "update-todo-form";
-
-  titleAttributes.value = todo.title;
-  descriptionAttributes.value = todo.description;
-  dueDateAttributes.value = todo.dueDate;
-  priorityAttributes.defaultValue = todo.priority;
+  form.id = "todo-form";
 
   const allInputAttributes = [
     titleAttributes,
@@ -75,15 +70,24 @@ const UpdateTodoForm = (todo) => {
 
   form.appendChild(formButtonElements);
 
-  dialog.appendChild(form);
-
   return form;
 };
 
-const updateTodoModal = (todo) => {
+const todoModal = (todo = null) => {
+  // If updating a todo
+  if (todo) {
+    titleAttributes.value = todo.title;
+    descriptionAttributes.value = todo.description;
+    dueDateAttributes.value = todo.dueDate;
+    priorityAttributes.defaultValue = todo.priority;
+  }
   const dialog = document.createElement("dialog");
-  dialog.id = "update-todo-modal";
-  const form = UpdateTodoForm(todo);
+  dialog.id = "todo-modal";
+
+  // Disable, because will not remove the dialog from the DOM when pressing the escape key in Chrome
+  dialog.addEventListener("cancel", (event) => event.preventDefault());
+
+  const form = todoForm();
 
   dialog.appendChild(form);
 
@@ -91,4 +95,4 @@ const updateTodoModal = (todo) => {
   return dialog;
 };
 
-export default updateTodoModal;
+export default todoModal;

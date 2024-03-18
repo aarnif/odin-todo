@@ -114,10 +114,10 @@ const addProjectsMenu = (projects) => {
 
   const newProjectButton = document.getElementById("new-project-button");
   const cancelNewProjectButton = document.getElementById(
-    "cancel-new-project-button"
+    "cancel-project-button"
   );
 
-  const newProjectModal = document.getElementById("new-project-modal");
+  const newProjectModal = document.getElementById("project-modal");
 
   projectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
