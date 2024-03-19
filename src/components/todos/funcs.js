@@ -3,11 +3,7 @@ import todoModal from "../modals/todo.js";
 import projectService from "../../services/projectService.js";
 import { Todo } from "../../projectsAndTodos/Todo.js";
 import { v4 as uuid } from "uuid";
-import {
-  updateProjectsMenu,
-  displayProjectTodos,
-  displayTodo,
-} from "../sideBar/funcs.js";
+import { updateProjectsMenu, displayProjectTodos } from "../sideBar/funcs.js";
 import checkListItemModal from "../modals/checkListItem.js";
 import addNotificationModal from "../modals/notification.js";
 
@@ -19,7 +15,9 @@ const handleUpdateTodo = (e, projects, project, oldTodo, todoId) => {
     e.target.elements.title.value,
     e.target.elements.description.value,
     e.target.elements.dueDate.value,
-    e.target.elements.priority.value
+    e.target.elements.priority.value,
+    oldTodo.completed,
+    oldTodo.showContents
   );
 
   oldTodo.checkList.forEach((item) => {
@@ -136,7 +134,7 @@ const handleUpdateCheckListItem = (e, projects, todoId, checkListItem, id) => {
 
   console.log("Update check list item form submitted");
 
-  displayTodo(projects, todoId);
+  displayProjectTodos(projects, projectTitle);
 
   updateCheckListItemModal.close();
   document.body.removeChild(updateCheckListItemModal);
@@ -190,7 +188,7 @@ const handleDeleteCheckListItem = (e, projects, todoId, checkListItem, id) => {
 
   console.log("Delete check list item form submitted");
 
-  displayTodo(projects, todoId);
+  displayProjectTodos(projects, projectTitle);
 
   deleteCheckListItemModal.close();
   document.body.removeChild(deleteCheckListItemModal);
@@ -249,7 +247,7 @@ const handleNewCheckListItem = (e, projects, todoId) => {
 
   console.log("New check list item form submitted");
 
-  displayTodo(projects, todoId);
+  displayProjectTodos(projects, projectTitle);
 
   newCheckListItemModal.close();
   document.body.removeChild(newCheckListItemModal);
@@ -285,7 +283,7 @@ const markCheckListItemCompleted = (projects, todoId, checkList, id) => {
   const getProject = projectService.getProjectByTitle(projects, projectTitle);
   const getTodo = getProject.getTodo(todoId);
   getTodo.markCheckListItemCompleted(id);
-  displayTodo(projects, todoId);
+  displayProjectTodos(projects, projectTitle);
 };
 
 const markTodoCompleted = (projects, id) => {
@@ -303,7 +301,7 @@ const markTodoCompleted = (projects, id) => {
 
   getTodo.toggleCompleted();
   updateProjectsMenu(projects);
-  displayTodo(projects, id);
+  displayProjectTodos(projects, projectTitle);
 };
 
 export default {

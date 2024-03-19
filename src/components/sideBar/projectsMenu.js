@@ -40,12 +40,7 @@ const projectMenuItemTodos = (title, todos) => {
 
   todos.forEach((todo) => {
     const todoItem = document.createElement("li");
-    const todoTitleButton = document.createElement("button");
-    todoTitleButton.id = todo.id;
-    todoTitleButton.dataset.project = title;
-    todoTitleButton.className = "todo-button";
-    todoTitleButton.textContent = todo.title;
-    todoItem.appendChild(todoTitleButton);
+    todoItem.textContent = todo.title;
     projectMenuItemTodosList.appendChild(todoItem);
   });
 
@@ -116,19 +111,11 @@ const addProjectsMenu = (projects) => {
   menu.appendChild(newProjectButtonContainer);
 
   const projectButtons = document.querySelectorAll(".project-button");
-  const todoButtons = document.querySelectorAll(".todo-button");
 
   projectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       console.log("Project button clicked:", e.target.textContent);
       funcs.displayProjectTodos(projects, e.target.textContent);
-    });
-  });
-
-  todoButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      console.log("Todo button clicked:", e.target.textContent);
-      funcs.displayTodo(projects, e.target.id);
     });
   });
 };

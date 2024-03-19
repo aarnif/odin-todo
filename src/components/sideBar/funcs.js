@@ -50,20 +50,6 @@ export const displayProjectTodos = (projects, projectTitle) => {
   displayNewTodoButton(true);
 };
 
-export const displayTodo = (projects, id) => {
-  const projectTitle = document.getElementById(id).dataset.project;
-  const projectByTitle = projectService.getProjectByTitle(
-    projects,
-    projectTitle
-  );
-  const todoById = todos(projects, projectTitle, [projectByTitle.getTodo(id)]);
-  console.log("Displaying todo by title:", projectByTitle.getTodo(id).title);
-  emptyContent();
-  content.appendChild(todoById);
-
-  displayNewTodoButton(false);
-};
-
 export const updateProjectsMenu = (projects) => {
   const oldProjectsMenu = document.getElementById("projects");
   const newProjectButton = document.getElementById("new-project-button");
@@ -215,7 +201,6 @@ const openDeleteProjectModal = (projects, id) => {
 export default {
   displayProjectTodos,
   displayTodosDueDate,
-  displayTodo,
   openNewProjectModal,
   openUpdateProjectModal,
   openDeleteProjectModal,

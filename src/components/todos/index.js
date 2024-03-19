@@ -1,4 +1,5 @@
 import funcs from "./funcs.js";
+import sidebarFuncs from "../sideBar/funcs.js";
 
 const item = (key, value) => {
   const todoItem = document.createElement("li");
@@ -75,44 +76,7 @@ const checkList = (projects, todoId, checkList) => {
   return todoCheckList;
 };
 
-const todoItem = (projects, projectTitle, todo) => {
-  const { id, title, ...items } = todo;
-  const todoContainer = document.createElement("li");
-  todoContainer.id = "todo-item";
-  todoContainer.dataset.id = id;
-
-  const todoHeader = document.createElement("h3");
-  todoHeader.id = id;
-  todoHeader.className = "todo-title";
-  todoHeader.dataset.project = projectTitle;
-  todoHeader.textContent = title;
-
-  todoContainer.appendChild(todoHeader);
-
-  const updateTodoButton = document.createElement("button");
-  updateTodoButton.id = id;
-  updateTodoButton.className = "update-todo-button pr-1";
-  updateTodoButton.textContent = "U";
-
-  updateTodoButton.addEventListener("click", () => {
-    console.log("Update todo button clicked");
-    funcs.openUpdateTodoModal(projects, id);
-  });
-
-  todoContainer.appendChild(updateTodoButton);
-
-  const deleteTodoButton = document.createElement("button");
-  deleteTodoButton.id = id;
-  deleteTodoButton.className = "update-todo-button";
-  deleteTodoButton.textContent = "D";
-
-  deleteTodoButton.addEventListener("click", () => {
-    console.log("Delete todo button clicked");
-    funcs.openDeleteTodoModal(projects, id);
-  });
-
-  todoContainer.appendChild(deleteTodoButton);
-
+const todoItemContent = (projects, id, items) => {
   const todoItemsList = document.createElement("ul");
 
   for (const [key, value] of Object.entries(items)) {
@@ -144,7 +108,7 @@ const todoItem = (projects, projectTitle, todo) => {
 
   todoItemsList.appendChild(checkListHeader);
 
-  const todoCheckListElement = checkList(projects, todo.id, todo.checkList);
+  const todoCheckListElement = checkList(projects, id, items.checkList);
   todoItemsList.appendChild(todoCheckListElement);
 
   const newCheckListItemButton = document.createElement("button");
@@ -159,7 +123,65 @@ const todoItem = (projects, projectTitle, todo) => {
 
   todoItemsList.appendChild(newCheckListItemButton);
 
-  todoContainer.appendChild(todoItemsList);
+  return todoItemsList;
+};
+
+const todoItem = (projects, projectTitle, todo) => {
+  const { id, title, ...items } = todo;
+  const todoContainer = document.createElement("li");
+  todoContainer.id = "todo-item";
+  todoContainer.dataset.id = id;
+
+  const todoHeader = document.createElement("h3");
+  todoHeader.id = id;
+  todoHeader.className = "todo-title";
+  todoHeader.dataset.project = projectTitle;
+  todoHeader.textContent = title;
+
+  todoContainer.appendChild(todoHeader);
+
+  const updateTodoButton = document.createElement("button");
+  updateTodoButton.id = id;
+  updateTodoButton.className = "update-todo-button pr-1";
+  updateTodoButton.textContent = "U";
+
+  updateTodoButton.addEventListener("click", () => {
+    console.log("Update todo button clicked");
+    funcs.openUpdateTodoModal(projects, id);
+  });
+
+  todoContainer.appendChild(updateTodoButton);
+
+  const deleteTodoButton = document.createElement("button");
+  deleteTodoButton.id = id;
+  deleteTodoButton.className = "delete-todo-button pr-1";
+  deleteTodoButton.textContent = "D";
+
+  deleteTodoButton.addEventListener("click", () => {
+    console.log("Delete todo button clicked");
+    funcs.openDeleteTodoModal(projects, id);
+  });
+
+  todoContainer.appendChild(deleteTodoButton);
+
+  const showTodoContentButton = document.createElement("button");
+  showTodoContentButton.id = id;
+  showTodoContentButton.className = "show-todo-content-button";
+
+  showTodoContentButton.textContent = "Show Content";
+
+  showTodoContentButton.addEventListener("click", () => {
+    console.log("Show todo content button clicked");
+    todo.toggleShowContents();
+    sidebarFuncs.displayProjectTodos(projects, projectTitle);
+  });
+
+  todoContainer.appendChild(showTodoContentButton);
+
+  if (todo.showContents) {
+    const todoItemsList = todoItemContent(projects, id, items);
+    todoContainer.appendChild(todoItemsList);
+  }
 
   return todoContainer;
 };

@@ -7,7 +7,8 @@ export class Todo {
     description,
     dueDate,
     priority = "Low",
-    completed = false
+    completed = false,
+    showContents = false
   ) {
     this.id = id;
     this.title = title;
@@ -17,10 +18,15 @@ export class Todo {
     this.timeLeft = this.calculateTimeLeft();
     this.completed = completed;
     this.checkList = [];
+    this.showContents = showContents;
   }
 
   toggleCompleted() {
     this.completed = !this.completed;
+  }
+
+  toggleShowContents() {
+    this.showContents = !this.showContents;
   }
 
   calculateTimeLeft() {
