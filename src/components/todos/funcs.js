@@ -26,6 +26,8 @@ const handleUpdateTodo = (e, projects, project, oldTodo, todoId) => {
 
   project.updateTodo(todoId, updatedTodo);
 
+  // This is a test comment
+
   updateProjectsMenu(projects);
   displayProjectTodos(projects, project.title);
 
