@@ -2,33 +2,56 @@ import addProjectsMenu from "./projectsMenu.js";
 import funcs from "./funcs.js";
 import projectModal from "../modals/project.js";
 import { endOfWeek, endOfMonth } from "date-fns";
+import inboxIcon from "../icons/inbox.js";
+import todayIcon from "../icons/today.js";
+import weekIcon from "../icons/week.js";
+import monthIcon from "../icons/month.js";
 
-const todosItem = (id, text) => {
+const todosItem = (id, icon, text) => {
   const li = document.createElement("li");
+  li.className = "w-full flex-row-justify-start-items-center my-2";
+
+  li.appendChild(icon());
+
   const button = document.createElement("button");
-  button.setAttribute("id", id);
+  button.id = id;
+  button.className = "header2";
   button.textContent = text;
   li.appendChild(button);
   return li;
 };
 
+const blankRow = () => {
+  const li = document.createElement("li");
+  li.className = "w-full flex-row-justify-start-items-center h-4";
+  return li;
+};
+
 const sideBar = () => {
   const sidebar = document.createElement("div");
-  sidebar.setAttribute("id", "sidebar");
+  sidebar.id = "sidebar";
+  sidebar.className = "sidebar";
 
   const nav = document.createElement("nav");
-  nav.setAttribute("id", "menu");
-
-  const h1 = document.createElement("h1");
-  h1.textContent = "Todo";
-  nav.appendChild(h1);
+  nav.id = "menu";
 
   const todoList = document.createElement("ul");
+  todoList.className = "flex-col-center";
 
-  todoList.appendChild(todosItem("inbox", "Inbox"));
-  todoList.appendChild(todosItem("today", "Today"));
-  todoList.appendChild(todosItem("week", "This week"));
-  todoList.appendChild(todosItem("month", "This month"));
+  const sideBarHeaderContainer = document.createElement("li");
+  const sideBarHeader = document.createElement("h1");
+  sideBarHeader.className = "header1";
+  sideBarHeader.textContent = "Todo";
+
+  sideBarHeaderContainer.appendChild(sideBarHeader);
+  todoList.appendChild(sideBarHeaderContainer);
+
+  todoList.appendChild(blankRow());
+  todoList.appendChild(todosItem("inbox", inboxIcon, "Inbox"));
+  todoList.appendChild(blankRow());
+  todoList.appendChild(todosItem("today", todayIcon, "Today"));
+  todoList.appendChild(todosItem("week", weekIcon, "This week"));
+  todoList.appendChild(todosItem("month", monthIcon, "This month"));
 
   nav.appendChild(todoList);
   sidebar.appendChild(nav);
@@ -36,10 +59,10 @@ const sideBar = () => {
   return sidebar;
 };
 
-const addNewProjectModal = () => {
-  const newProjectModalElement = projectModal();
-  document.body.appendChild(newProjectModalElement);
-};
+// const addNewProjectModal = () => {
+//   const newProjectModalElement = projectModal();
+//   document.body.appendChild(newProjectModalElement);
+// };
 
 export const removeSideBar = () => {
   const sidebar = document.getElementById("sidebar");

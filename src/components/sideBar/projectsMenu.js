@@ -1,37 +1,74 @@
 import funcs from "./funcs.js";
+import projectIcon from "../icons/project.js";
+import todoIcon from "../icons/todo.js";
+import updateIcon from "../icons/update.js";
+import deleteIcon from "../icons/delete.js";
+import plusIcon from "../icons/plus.js";
 
 const projectMenuItemTitle = (projects, id, title) => {
-  const projectTitleContainer = document.createElement("li");
+  const projectTitleContainer = document.createElement("ul");
+  projectTitleContainer.className = "flex-row-justify-start-items-center";
+
+  const projectIconContainer = document.createElement("li");
+  projectIconContainer.className = "flex-row-justify-center-items-center";
+  projectIconContainer.appendChild(projectIcon());
+
+  const projectTitleButtonContainer = document.createElement("li");
+  projectTitleButtonContainer.className =
+    "flex-row-justify-center-items-center";
   const projectTitleButton = document.createElement("button");
   projectTitleButton.id = id;
-  projectTitleButton.className = "project-button";
+  projectTitleButton.className = "project-button project-menu-header mr-2";
   projectTitleButton.textContent = title;
 
+  projectTitleButtonContainer.appendChild(projectTitleButton);
+  projectTitleContainer.appendChild(projectTitleButtonContainer);
+
+  const updateProjectButtonContainer = document.createElement("li");
+  updateProjectButtonContainer.className =
+    "flex-row-justify-center-items-center";
   const updateProjectButton = document.createElement("button");
   updateProjectButton.id = id;
-  updateProjectButton.className = "update-project-button pl-1";
-  updateProjectButton.textContent = "U";
+  updateProjectButton.className = "update-project-button";
+
+  const updateProjectIcon = updateIcon();
+  updateProjectIcon.id = id;
 
   updateProjectButton.addEventListener("click", (e) => {
     console.log("Update project button clicked");
-    const projectId = e.target.id;
+    const projectId = e.currentTarget.id;
     funcs.openUpdateProjectModal(projects, projectId);
   });
 
+  updateProjectButton.appendChild(updateProjectIcon);
+
+  updateProjectButtonContainer.appendChild(updateProjectButton);
+
+  const deleteButtonContainer = document.createElement("li");
+  deleteButtonContainer.className = "flex-row-justify-center-items-center";
   const deleteProjectButton = document.createElement("button");
   deleteProjectButton.id = id;
-  deleteProjectButton.className = "delete-project-button pl-1";
-  deleteProjectButton.textContent = "D";
+  deleteProjectButton.className = "delete-project-button";
+
+  const deleteProjectIcon = deleteIcon();
+  deleteProjectIcon.id = id;
+
+  console.log("deleteProjectIcon:", deleteProjectIcon);
 
   deleteProjectButton.addEventListener("click", (e) => {
     console.log("Delete project button clicked");
-    const projectId = e.target.id;
+    const projectId = e.currentTarget.id;
     funcs.openDeleteProjectModal(projects, projectId);
   });
 
-  projectTitleContainer.appendChild(projectTitleButton);
-  projectTitleContainer.appendChild(updateProjectButton);
-  projectTitleContainer.appendChild(deleteProjectButton);
+  deleteProjectButton.appendChild(deleteProjectIcon);
+
+  deleteButtonContainer.appendChild(deleteProjectButton);
+
+  projectTitleContainer.appendChild(projectIconContainer);
+  projectTitleContainer.appendChild(projectTitleButtonContainer);
+  projectTitleContainer.appendChild(updateProjectButtonContainer);
+  projectTitleContainer.appendChild(deleteButtonContainer);
   return projectTitleContainer;
 };
 
@@ -40,7 +77,21 @@ const projectMenuItemTodos = (title, todos) => {
 
   todos.forEach((todo) => {
     const todoItem = document.createElement("li");
-    todoItem.textContent = todo.title;
+    const todoItemList = document.createElement("ul");
+    todoItemList.className = "flex-row-justify-start-items-center";
+
+    const todoIconContainer = document.createElement("li");
+    todoIconContainer.appendChild(todoIcon());
+
+    const todoTitleContainer = document.createElement("li");
+    todoTitleContainer.className = "header3";
+    todoTitleContainer.textContent = todo.title;
+
+    todoItemList.appendChild(todoIconContainer);
+    todoItemList.appendChild(todoTitleContainer);
+
+    todoItem.appendChild(todoItemList);
+
     projectMenuItemTodosList.appendChild(todoItem);
   });
 
@@ -68,9 +119,18 @@ export const projectsMenuItem = (projects, project) => {
 
 const newProjectButtonElement = (projects) => {
   const newProjectButtonContainer = document.createElement("div");
+  newProjectButtonContainer.className = "new-project-button-container";
   const newProjectButton = document.createElement("button");
   newProjectButton.id = "new-project-button";
-  newProjectButton.textContent = "New Project";
+  newProjectButton.className = "button flex-row-justify-center-items-center";
+
+  const newProjectButtonIcon = plusIcon();
+  newProjectButton.appendChild(newProjectButtonIcon);
+
+  const newProjectButtonText = document.createElement("span");
+  newProjectButtonText.textContent = "New Project";
+
+  newProjectButton.appendChild(newProjectButtonText);
 
   newProjectButton.addEventListener("click", () => {
     console.log("New project button clicked");
@@ -87,6 +147,7 @@ const projectsMenu = (projects) => {
 
   const projectsListHeaderContainer = document.createElement("li");
   const projectsListHeader = document.createElement("h2");
+  projectsListHeader.className = "header1";
   projectsListHeader.textContent = "Projects";
 
   projectsListHeaderContainer.appendChild(projectsListHeader);
