@@ -14,11 +14,12 @@ const emptyContent = () => {
 
 const displayNewTodoButton = (display) => {
   const newTodoButton = document.getElementById("new-todo-button");
+  console.log("Toggle new todo button visibility:");
   if (display) {
-    newTodoButton.style.display = "block";
+    newTodoButton.style.visibility = "visible";
     return;
   }
-  newTodoButton.style.display = "none";
+  newTodoButton.style.visibility = "hidden";
 };
 
 const displayTodosDueDate = (projects, todosPageTitle, dueDate) => {
@@ -52,7 +53,9 @@ export const displayProjectTodos = (projects, projectTitle) => {
 
 export const updateProjectsMenu = (projects) => {
   const oldProjectsMenu = document.getElementById("projects");
-  const newProjectButton = document.getElementById("new-project-button");
+  const newProjectButton = document.getElementById(
+    "new-project-button-container"
+  );
   newProjectButton.remove();
   oldProjectsMenu.remove();
   addProjectsMenu(projects);

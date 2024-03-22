@@ -18,6 +18,9 @@
   .flex-row-justify-start-items-end {
     @apply flex justify-start items-end;
   }
+  .flex-row-justify-between-items-center {
+    @apply flex justify-between items-center;
+  }
   .flex-col-justify-center-items-center {
     @apply flex flex-col justify-center items-center;
   }
@@ -52,28 +55,34 @@
     @apply flex flex-col items-start;
   }
   .menu-icon {
-    @apply w-6 h-6 mr-2 fill-current text-slate-600;
+    @apply w-6 h-6 fill-current text-slate-600;
   }
   .inbox-icon {
-    @apply w-6 h-6 mr-2 fill-current text-sky-600;
+    @apply w-6 h-6 fill-current text-sky-600;
   }
   .today-icon {
-    @apply w-6 h-6 mr-2 fill-current text-amber-500;
+    @apply w-6 h-6 fill-current text-amber-500;
   }
   .week-icon {
-    @apply w-6 h-6 mr-2 fill-current text-red-600;
+    @apply w-6 h-6 fill-current text-red-600;
   }
   .month-icon {
-    @apply w-6 h-6 mr-2 fill-current text-red-600;
+    @apply w-6 h-6 fill-current text-red-600;
   }
   .update-icon {
-    @apply w-6 h-6 mr-2 fill-current text-slate-600 hover:text-slate-800;
+    @apply w-6 h-6 fill-current text-slate-600 hover:text-slate-800;
   }
   .delete-icon {
-    @apply w-6 h-6 mr-2 fill-current text-slate-600 hover:text-slate-800;
+    @apply w-6 h-6 fill-current text-slate-600 hover:text-slate-800;
   }
   .plus-icon {
-    @apply w-6 h-6 mr-2 fill-current;
+    @apply w-6 h-6 fill-current;
+  }
+  .chevron-up-icon {
+    @apply w-8 h-8 fill-current text-slate-600 hover:text-slate-800;
+  }
+  .chevron-down-icon {
+    @apply w-8 h-8 fill-current text-slate-600 hover:text-slate-800;
   }
   .sidebar {
     @apply bg-slate-100;
@@ -93,7 +102,19 @@
   .new-project-button-container {
     @apply w-full flex-row-justify-center-items-center px-6 py-4 border-t-2 border-slate-300;
   }
+  .new-todo-button-container {
+    @apply w-full flex-row-justify-center-items-center px-6 py-4 border-t-2 border-slate-300;
+  }
   .button {
-    @apply transition ease-in-out px-4 py-2 border-2 border-slate-500 rounded-md text-xl text-slate-600 font-bold hover:bg-slate-500 hover:text-slate-100 active:scale-95;
+    @apply transition ease-in-out flex-row-justify-center-items-center px-4 py-2 border-2 border-slate-500 rounded-md text-xl text-slate-600 font-bold hover:bg-slate-500 hover:text-slate-100 active:scale-95;
+  }
+  .todo-item {
+    @apply w-full mb-8 px-6 py-4 border-2 border-slate-300 rounded-md;
+  }
+  .todo-header-container {
+    @apply flex-row-justify-between-items-center;
+  }
+  .todo-title-and-icon-container {
+    @apply flex-row-justify-start-items-center;
   }
 }

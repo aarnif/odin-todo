@@ -11,7 +11,10 @@ const todosItem = (id, icon, text) => {
   const li = document.createElement("li");
   li.className = "w-full flex-row-justify-start-items-center my-2";
 
-  li.appendChild(icon());
+  const itemIcon = icon();
+  itemIcon.className = "pr-2";
+
+  li.appendChild(itemIcon);
 
   const button = document.createElement("button");
   button.id = id;

@@ -11,7 +11,10 @@ const projectMenuItemTitle = (projects, id, title) => {
 
   const projectIconContainer = document.createElement("li");
   projectIconContainer.className = "flex-row-justify-center-items-center";
-  projectIconContainer.appendChild(projectIcon());
+
+  const projectIconElement = projectIcon();
+  projectIconElement.className = "pr-2";
+  projectIconContainer.appendChild(projectIconElement);
 
   const projectTitleButtonContainer = document.createElement("li");
   projectTitleButtonContainer.className =
@@ -33,8 +36,9 @@ const projectMenuItemTitle = (projects, id, title) => {
 
   const updateProjectIcon = updateIcon();
   updateProjectIcon.id = id;
+  updateProjectIcon.className = "mr-2";
 
-  updateProjectButton.addEventListener("click", (e) => {
+  updateProjectIcon.addEventListener("click", (e) => {
     console.log("Update project button clicked");
     const projectId = e.currentTarget.id;
     funcs.openUpdateProjectModal(projects, projectId);
@@ -55,7 +59,7 @@ const projectMenuItemTitle = (projects, id, title) => {
 
   console.log("deleteProjectIcon:", deleteProjectIcon);
 
-  deleteProjectButton.addEventListener("click", (e) => {
+  deleteProjectIcon.addEventListener("click", (e) => {
     console.log("Delete project button clicked");
     const projectId = e.currentTarget.id;
     funcs.openDeleteProjectModal(projects, projectId);
@@ -81,7 +85,9 @@ const projectMenuItemTodos = (title, todos) => {
     todoItemList.className = "flex-row-justify-start-items-center";
 
     const todoIconContainer = document.createElement("li");
-    todoIconContainer.appendChild(todoIcon());
+    const todoIconElement = todoIcon();
+    todoIconElement.className = "pr-2";
+    todoIconContainer.appendChild(todoIconElement);
 
     const todoTitleContainer = document.createElement("li");
     todoTitleContainer.className = "header3";
@@ -119,10 +125,11 @@ export const projectsMenuItem = (projects, project) => {
 
 const newProjectButtonElement = (projects) => {
   const newProjectButtonContainer = document.createElement("div");
+  newProjectButtonContainer.id = "new-project-button-container";
   newProjectButtonContainer.className = "new-project-button-container";
   const newProjectButton = document.createElement("button");
   newProjectButton.id = "new-project-button";
-  newProjectButton.className = "button flex-row-justify-center-items-center";
+  newProjectButton.className = "button";
 
   const newProjectButtonIcon = plusIcon();
   newProjectButton.appendChild(newProjectButtonIcon);
