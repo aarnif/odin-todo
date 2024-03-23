@@ -24,6 +24,9 @@
   .flex-row-justify-between-items-center {
     @apply flex justify-between items-center;
   }
+  .flex-row-justify-end-items-center {
+    @apply flex justify-end items-center;
+  }
   .flex-col-justify-center-items-center {
     @apply flex flex-col justify-center items-center;
   }
@@ -123,13 +126,22 @@
   .check-list-header {
     @apply header2 my-4 border-b-2 border-slate-300;
   }
+  .check-list-items {
+    @apply py-2 mb-4 border-b-2 border-slate-300;
+  }
   .check-list-item-content {
-    @apply max-w-[300px] my-1 flex-row-justify-start-items-center text-lg text-slate-700;
+    @apply max-w-[300px] mb-1 flex-row-justify-start-items-center text-lg text-slate-700;
   }
   .check-list-item-content > li {
     @apply pr-4;
   }
   .new-check-list-item-button {
-    @apply button text-lg my-2 px-3 py-1;
+    @apply mt-4 button text-lg my-2 px-3 py-1;
+  }
+  .mark-todo-completed-button-container {
+    @apply flex-row-justify-center-items-center;
+  }
+  .mark-todo-completed-button {
+    @apply button;
   }
 }

@@ -7,27 +7,59 @@ import chevronUpIcon from "../icons/chevronUp.js";
 import chevronDownIcon from "../icons/chevronDown.js";
 import addCheckListToTodoItem from "./checkListItem.js";
 
-const item = (key, value) => {
-  const todoItem = document.createElement("li");
-  todoItem.textContent = `${key}: ${value}`;
-  return todoItem;
+const todoPriority = (priority) => {
+  let textColor = "";
+  let backgroundColor = "";
+  switch (priority) {
+    case "Low":
+      textColor = "text-green-700";
+      backgroundColor = "bg-green-200";
+      break;
+    case "Medium":
+      textColor = "text-yellow-700";
+      backgroundColor = "bg-yellow-200";
+      break;
+    case "High":
+      textColor = "text-red-700";
+      backgroundColor = "bg-red-200";
+      break;
+    default:
+      textColor = "text-green-700";
+      backgroundColor = "bg-green-200";
+  }
+  const todoPriority = document.createElement("h3");
+  todoPriority.className = `w-[100px] ml-2 header3 ${backgroundColor} ${textColor} text-center rounded-full`;
+  todoPriority.textContent = priority;
+
+  return todoPriority;
 };
 
 const todoItemContent = (projects, id, items) => {
   const todoItemsList = document.createElement("ul");
 
-  for (const [key, value] of Object.entries(items)) {
-    if (key !== "checkList" && key !== "showContents") {
-      const todoItemListElement = item(key, value);
-      todoItemsList.appendChild(todoItemListElement);
-    }
-  }
+  const todoDescription = document.createElement("li");
+  todoDescription.className = "mt-2 mb-12 header3";
+
+  const todoDescriptionTitle = document.createElement("h2");
+  todoDescriptionTitle.textContent = items.description;
+
+  const todoTimeLeft = document.createElement("h3");
+  todoTimeLeft.className = "header3 text-slate-500";
+  todoTimeLeft.textContent = items.timeLeft;
+
+  todoDescription.appendChild(todoDescriptionTitle);
+  todoDescription.appendChild(todoTimeLeft);
+  todoItemsList.appendChild(todoDescription);
+
+  addCheckListToTodoItem(projects, id, todoItemsList, items.checkList);
 
   const markTodoCompletedButtonContainer = document.createElement("li");
+  markTodoCompletedButtonContainer.className =
+    "mark-todo-completed-button-container";
   const todoMarkCompletedButton = document.createElement("button");
 
   todoMarkCompletedButton.id = id;
-  todoMarkCompletedButton.className = "mark-completed-button";
+  todoMarkCompletedButton.className = "mark-todo-completed-button";
   todoMarkCompletedButton.textContent = "Mark Completed";
 
   todoMarkCompletedButton.addEventListener("click", () => {
@@ -38,8 +70,6 @@ const todoItemContent = (projects, id, items) => {
   markTodoCompletedButtonContainer.appendChild(todoMarkCompletedButton);
 
   todoItemsList.appendChild(markTodoCompletedButtonContainer);
-
-  addCheckListToTodoItem(projects, id, todoItemsList, items.checkList);
 
   return todoItemsList;
 };
@@ -67,7 +97,14 @@ const todoItem = (projects, projectTitle, todo) => {
   todoTitle.dataset.project = projectTitle;
   todoTitle.textContent = title;
 
+  if (todo.completed) {
+    todoTitle.className = "header2 text-slate-500 line-through";
+  }
+
   todoTitleAndIconContainer.appendChild(todoTitle);
+
+  const todoPriorityElement = todoPriority(items.priority);
+  todoTitleAndIconContainer.appendChild(todoPriorityElement);
 
   const updateTodoButton = document.createElement("button");
   updateTodoButton.id = id;

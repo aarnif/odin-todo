@@ -79,6 +79,7 @@ const checkListItem = (projects, todoId, checkList) => {
 const checkList = (projects, todoId, checkList) => {
   const todoCheckList = document.createElement("ul");
   todoCheckList.id = todoId;
+  todoCheckList.className = "check-list-items";
   checkList.forEach((item) => {
     const todoCheckListItemContainer = document.createElement("li");
     const todoCheckListItem = checkListItem(projects, todoId, item);
