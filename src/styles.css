@@ -9,6 +9,9 @@
   ul {
     @apply list-none;
   }
+  form {
+    @apply w-full flex justify-center items-center;
+  }
   .flex-row-justify-start-items-center {
     @apply flex justify-start items-center;
   }
@@ -143,5 +146,38 @@
   }
   .mark-todo-completed-button {
     @apply button;
+  }
+  dialog {
+    @apply w-full max-w-[300px] p-6 rounded-md bg-slate-100;
+  }
+  dialog::backdrop {
+    @apply bg-black bg-opacity-80;
+  }
+  #todo-modal {
+    @apply max-w-[400px];
+  }
+  .form-row {
+    @apply w-full flex-col-justify-center-items-start;
+  }
+  .form-label {
+    @apply header2 text-slate-700;
+  }
+  .form-input {
+    @apply w-full px-4 py-2 border-2 border-slate-300 rounded-md text-lg text-slate-700 hover:border-slate-500 focus:outline-none focus:border-slate-500;
+  }
+  .form-textarea {
+    @apply w-full px-4 py-2 border-2 border-slate-300 rounded-md text-lg text-slate-700 hover:border-slate-500 focus:outline-none focus:border-slate-500;
+  }
+  .form-buttons {
+    @apply flex-row-justify-between-items-center w-full;
+  }
+  .cancel-button {
+    @apply button border-red-400 rounded-md text-xl text-red-500 font-bold hover:bg-red-400 hover:text-red-100;
+  }
+  .submit-button {
+    @apply button  border-green-400 rounded-md text-xl text-green-500 font-bold hover:bg-green-400 hover:text-green-100;
+  }
+  .ok-button {
+    @apply button w-[100px];
   }
 }

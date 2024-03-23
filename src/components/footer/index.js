@@ -1,7 +1,7 @@
 import funcs from "./funcs.js";
 import plusIcon from "../icons/plus.js";
 
-const newTodoButton = () => {
+const newTodoButton = (projects) => {
   const newTodoButton = document.createElement("button");
   newTodoButton.id = "new-todo-button";
   newTodoButton.className = "button";
@@ -29,7 +29,7 @@ const footer = (projects) => {
   const footerContent = document.createElement("div");
   footerContent.className = "new-todo-button-container";
 
-  const newTodoButtonElement = newTodoButton();
+  const newTodoButtonElement = newTodoButton(projects);
 
   footerContent.appendChild(newTodoButtonElement);
   footer.appendChild(footerContent);

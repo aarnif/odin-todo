@@ -5,7 +5,7 @@ const titleAttributes = {
   type: "text",
   id: "title",
   name: "title",
-  value: "Test",
+  value: "",
   placeholder: "Title",
   required: true,
 };
@@ -14,7 +14,7 @@ const descriptionAttributes = {
   type: "text",
   id: "description",
   name: "description",
-  value: "Test Todo description",
+  value: "",
   placeholder: "Description",
 };
 
