@@ -9,7 +9,7 @@ import monthIcon from "../icons/month.js";
 
 const todosItem = (id, icon, text) => {
   const li = document.createElement("li");
-  li.className = "w-full flex-row-justify-start-items-center my-2";
+  li.className = "w-full flex-row-justify-start-items-center my-2 mx-8";
 
   const itemIcon = icon();
   itemIcon.className = "pr-2";
@@ -43,7 +43,7 @@ const sideBar = () => {
 
   const sideBarHeaderContainer = document.createElement("li");
   const sideBarHeader = document.createElement("h1");
-  sideBarHeader.className = "header1";
+  sideBarHeader.className = "header1 m-8";
   sideBarHeader.textContent = "Todo";
 
   sideBarHeaderContainer.appendChild(sideBarHeader);
@@ -62,11 +62,6 @@ const sideBar = () => {
   return sidebar;
 };
 
-// const addNewProjectModal = () => {
-//   const newProjectModalElement = projectModal();
-//   document.body.appendChild(newProjectModalElement);
-// };
-
 export const removeSideBar = () => {
   const sidebar = document.getElementById("sidebar");
   sidebar.remove();
@@ -78,7 +73,6 @@ const addSideBar = (projects) => {
 
   wrapper.appendChild(sideBarElement);
 
-  // addNewProjectModal();
   addProjectsMenu(projects);
 
   const inboxButton = document.getElementById("inbox");

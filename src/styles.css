@@ -7,13 +7,16 @@
     @apply m-0 box-border font-roboto text-slate-800;
   }
   ul {
-    @apply m-4 list-none;
+    @apply list-none;
   }
   .flex-row-justify-start-items-center {
     @apply flex justify-start items-center;
   }
   .flex-row-justify-center-items-center {
     @apply flex justify-center items-center;
+  }
+  .flex-row-justify-around-items-center {
+    @apply flex justify-around items-center;
   }
   .flex-row-justify-start-items-end {
     @apply flex justify-start items-end;
@@ -109,12 +112,24 @@
     @apply transition ease-in-out flex-row-justify-center-items-center px-4 py-2 border-2 border-slate-500 rounded-md text-xl text-slate-600 font-bold hover:bg-slate-500 hover:text-slate-100 active:scale-95;
   }
   .todo-item {
-    @apply w-full mb-8 px-6 py-4 border-2 border-slate-300 rounded-md;
+    @apply m-8 px-6 py-4 border-2 border-slate-300 rounded-md;
   }
   .todo-header-container {
     @apply flex-row-justify-between-items-center;
   }
   .todo-title-and-icon-container {
     @apply flex-row-justify-start-items-center;
+  }
+  .check-list-header {
+    @apply header2 my-4 border-b-2 border-slate-300;
+  }
+  .check-list-item-content {
+    @apply max-w-[300px] my-1 flex-row-justify-start-items-center text-lg text-slate-700;
+  }
+  .check-list-item-content > li {
+    @apply pr-4;
+  }
+  .new-check-list-item-button {
+    @apply button text-lg my-2 px-3 py-1;
   }
 }

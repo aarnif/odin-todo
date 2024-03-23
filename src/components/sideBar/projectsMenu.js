@@ -7,7 +7,7 @@ import plusIcon from "../icons/plus.js";
 
 const projectMenuItemTitle = (projects, id, title) => {
   const projectTitleContainer = document.createElement("ul");
-  projectTitleContainer.className = "flex-row-justify-start-items-center";
+  projectTitleContainer.className = "flex-row-justify-start-items-center m-8";
 
   const projectIconContainer = document.createElement("li");
   projectIconContainer.className = "flex-row-justify-center-items-center";
@@ -82,7 +82,7 @@ const projectMenuItemTodos = (title, todos) => {
   todos.forEach((todo) => {
     const todoItem = document.createElement("li");
     const todoItemList = document.createElement("ul");
-    todoItemList.className = "flex-row-justify-start-items-center";
+    todoItemList.className = "flex-row-justify-start-items-center my-2 mx-8";
 
     const todoIconContainer = document.createElement("li");
     const todoIconElement = todoIcon();
@@ -154,7 +154,7 @@ const projectsMenu = (projects) => {
 
   const projectsListHeaderContainer = document.createElement("li");
   const projectsListHeader = document.createElement("h2");
-  projectsListHeader.className = "header1";
+  projectsListHeader.className = "header1 m-8";
   projectsListHeader.textContent = "Projects";
 
   projectsListHeaderContainer.appendChild(projectsListHeader);
