@@ -19,6 +19,7 @@ const deleteForm = (deleteFormText) => {
   form.id = "delete-form";
 
   const formHeader = document.createElement("h2");
+  formHeader.className = "w-full header2 mb-4 text-center";
   formHeader.textContent = deleteFormText;
 
   const formButtonElements = formButtons(
